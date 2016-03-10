@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'db_edutrax',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'Administrator321+',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
