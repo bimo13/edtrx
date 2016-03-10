@@ -1,0 +1,49 @@
+.btn-flat {
+    border-radius: 0;
+}
+
+.footer-links {
+    position: relative;
+}
+
+.login-footer {
+    float: none;
+    position: relative;
+
+    margin: 0 auto;
+}
+
+.login-footer a {
+    right: 0;
+    bottom: 15px;
+    position: absolute;
+
+    color: #FFF;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.login-footer a:first-child {
+    left: 0;
+}
+
+.login-footer a span {
+    color: #EEA640;
+}
+
+.login-footer a:hover span {
+    text-decoration: underline;
+}
+
+/* FORM STYLES */
+
+.main-form-wrapper {
+    height: 500px;
+    padding-right: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.main-form-wrapper::-webkit-scrollbar{ width: 5px }
+.main-form-wrapper::-webkit-scrollbar-track{ background-color: #ccc;border-radius: 333px }
+.main-form-wrapper::-webkit-scrollbar-thumb{ border-radius: 333px;background-color: #53c7d1 }
