@@ -7,13 +7,16 @@ class MainController extends BaseController {
     }
 
     public function dashboard() {
-        // $credentials = array(
-        //     'email'    => 'admin@edutrax.com',
-        //     'password' => 'Administrator321+',
-        // );
+        // try {
+        //     $user = Sentry::getUser();
+        //     // $user = Sentry::findUserByID(1);
+        //     $userGroup = $user->hasAccess('admin');
+        // } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+        //     echo 'User was not found.';
+        // }
 
-        // $user = Sentry::authenticate($credentials);
-        // Sentry::logout();
+        // var_dump($userGroup); die();
+
         return View::make('dashboard');
     }
 

@@ -1,6 +1,7 @@
 @extends('dashboard')
 
 @section('styles')
+{{ HTML::style('assets/css/agenda.css') }}
 {{ HTML::style('assets/css/datetimepicker/datepicker.css') }}
 @stop
 

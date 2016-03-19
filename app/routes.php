@@ -35,7 +35,7 @@ Route::group(['before' => 'hasAccess:admin,admin.agenda'], function() {
 });
 
 Route::group(['before' => 'hasAccess:admin,admin.attendance'], function() {
-    Route::get('/attendance', 'MainController@attendance');
+    Route::resource('/attendance', 'AttendanceController');
 });
 
 Route::group(['before' => 'hasAccess:admin,admin.gallery'], function() {
