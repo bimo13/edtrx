@@ -6,6 +6,7 @@
         <title>Edutrax</title>
         {{ HTML::style('assets/css/bootstrap.css') }}
         {{ HTML::style('assets/css/font-awesome.min.css') }}
+        {{ HTML::style('assets/css/my.css') }}
         {{ HTML::style('assets/css/custom.css') }}
         @yield('styles')
     </head>
