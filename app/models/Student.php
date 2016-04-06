@@ -8,10 +8,16 @@ class Student extends Model {
 
     protected $table = 'students';
 
+    public function classes() {
+        return $this->belongsTo('Classes', 'class_id', 'id');
+    }
+
     public function scopeSaveNewStudent($query,$params) {
 
+        $response = array();
         $input = $params['input'];
         $rules = $params['rules'];
+        $mobile = Input::get('mobile');
 
         $imgRule = array('photo' => 'required|image|mimes:png,gif,jpg,jpeg,bmp|max:20000');
         $rules = $rules + $imgRule;
@@ -22,7 +28,15 @@ class Student extends Model {
         
         $validating = Validator::make($input, $rules);
         if ($validating->fails()) {
-            return Redirect::route('students.create')->withInput()->withErrors($validating);
+            if ($mobile == 'on') {
+                header('Content-Type: application/json');
+                $response['status'] = 0;
+                $response['message'] = $validating->messages();
+                echo json_encode($response);
+                die();
+            } else {
+                return Redirect::route('students.create')->withInput()->withErrors($validating);
+            }
         }
 
         // Prevent "directory not exists" error
@@ -50,16 +64,31 @@ class Student extends Model {
         $this->parent_id = Input::get('parent_id');
         $this->class_id = Input::get('class_id');
         $this->photo = $imagePath;
-        $this->save();
 
-        return Redirect::route('students.index');
+        if($this->save()) {
+            $response['status'] = 1;
+            $response['message'] = "Data saved successfully.";
+        } else {
+            $response['status'] = 0;
+            $response['message'] = "An error occured, cannot save to database.";
+        }
+
+        if ($mobile == 'on') {
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            die();
+        } else {
+            return Redirect::route('students.index');
+        }
 
     }
 
     public function scopeUpdateStudent($query,$params) {
 
+        $response = array();
         $input = $params['input'];
         $rules = $params['rules'];
+        $mobile = Input::get('mobile');
 
         if (Input::hasFile('photo')) {
             $imgRule = array('photo' => 'image|mimes:png,gif,jpg,jpeg,bmp|max:20000');
@@ -68,7 +97,15 @@ class Student extends Model {
 
         $validating = Validator::make($input, $rules);
         if ($validating->fails()) {
-            return Redirect::route('students.edit', array(Input::get('id')))->withInput()->withErrors($validating);
+            if ($mobile == 'on') {
+                header('Content-Type: application/json');
+                $response['status'] = 0;
+                $response['message'] = $validating->messages();
+                echo json_encode($response);
+                die();
+            } else {
+                return Redirect::route('students.edit', array(Input::get('id')))->withInput()->withErrors($validating);
+            }
         }
 
         $update = $this->findOrFail(Input::get('id'));
@@ -114,9 +151,36 @@ class Student extends Model {
         $update->gender = Input::get('gender');
         $update->parent_id = Input::get('parent_id');
         $update->class_id = Input::get('class_id');
-        $update->update();
+        
+        if($this->update()) {
+            $response['status'] = 1;
+            $response['message'] = "Data updated successfully.";
+        } else {
+            $response['status'] = 0;
+            $response['message'] = "An error occured, cannot save to database.";
+        }
 
-        return Redirect::route('students.index');
+        if ($mobile == 'on') {
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            die();
+        } else {
+            return Redirect::route('students.index');
+        }
+
+    }
+
+    public function scopeGetMyStudent($query) {
+
+        $user_id = Sentry::getUser()->id;
+        $classes = Classes::where('teacher_id', '=', $user_id)->first();
+
+        $query->select(
+            'id',
+            'student_no',
+            DB::raw('CONCAT(first_name, " ", last_name) as full_name')
+        );
+        return $query;
 
     }
 

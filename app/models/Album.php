@@ -26,9 +26,11 @@ class Album extends Model {
         else
             $input = Input::except('images');
 
+        $response = array();
         $rules = $params['rules'];
         $messages = $params['messages'];
         $images = Input::file('images');
+        $mobile = Input::get('mobile');
 
         if ($images != null && $images != "") {
             foreach(Input::file('images') as $key => $value) {
@@ -46,7 +48,15 @@ class Album extends Model {
 
         $validating = Validator::make($input, $rules, $messages);
         if ($validating->fails()) {
-            return Redirect::route('gallery.create')->withInput()->withErrors($validating);
+            if ($mobile == 'on') {
+                header('Content-Type: application/json');
+                $response['status'] = 0;
+                $response['message'] = $validating->messages();
+                echo json_encode($response);
+                die();
+            } else {
+                return Redirect::route('gallery.create')->withInput()->withErrors($validating);
+            }
         }
 
         $this->name = Input::get('name');
@@ -83,7 +93,16 @@ class Album extends Model {
             }
         }
 
-        return Redirect::route('gallery.index');
+        $response['status'] = 1;
+        $response['message'] = "Data saved successfully.";
+
+        if ($mobile == 'on') {
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            die();
+        } else {
+            return Redirect::route('gallery.index');
+        }
 
     }
 

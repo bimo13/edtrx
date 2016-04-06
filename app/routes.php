@@ -35,6 +35,7 @@ Route::group(['before' => 'hasAccess:admin,admin.agenda'], function() {
 });
 
 Route::group(['before' => 'hasAccess:admin,admin.attendance'], function() {
+    Route::get('/attendance/student/{$student_id}', 'AttendanceController@showStudent');
     Route::resource('/attendance', 'AttendanceController');
 });
 
@@ -48,6 +49,7 @@ Route::group(['before' => 'hasAccess:admin,admin.grade'], function() {
 });
 
 Route::group(['before' => 'hasAccess:admin,admin.student'], function() {
+    Route::get('/students/getMyStudents', 'StudentsController@getMyStudents');
     Route::resource('students', 'StudentsController');
 });
 

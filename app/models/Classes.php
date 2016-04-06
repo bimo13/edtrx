@@ -11,6 +11,10 @@ class Classes extends Model {
         return $this->hasOne('User', 'id', 'teacher_id');
     }
 
+    public function students() {
+        return $this->hasMany('Student', 'class_id', 'id');
+    }
+
     public function scopeGetAllData($query) {
         $query->select(array(
             'id',

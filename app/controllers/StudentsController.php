@@ -1,5 +1,6 @@
 <?php
 
+use DataTables\DataTablesCustom as DatatablesCustom;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class StudentsController extends BaseController {
@@ -63,6 +64,21 @@ class StudentsController extends BaseController {
 
     public function destroy($id) {
         //
+    }
+
+    // END OF RESTful ROUTING
+    // BEGIN DATA-TRANSACTION ROUTING (AJAX NECESSITIES)
+    public function getMyStudents() {
+        $students = Student::getMyStudent();
+
+        // Begin constructing data for datatables
+        $datatable = DatatablesCustom::of($students);
+        $datatable->remove_column('id');
+        $datatable->edit_column('action', function($obj) {
+            $ret = '<a href="javascript:void(0);">View Detail</a>';
+            return $ret;
+        });
+        return $datatable->out();
     }
 
 }

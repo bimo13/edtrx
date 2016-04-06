@@ -9,13 +9,23 @@ class Agenda extends Model {
 
     public function scopeSaveNewAgenda($query,$params) {
 
+        $response = array();
         $input = $params['input'];
         $rules = $params['rules'];
         $message = $params['messages'];
+        $mobile = Input::get('mobile');
 
         $validating = Validator::make($input, $rules, $message);
         if ($validating->fails()) {
-            return Redirect::route('agenda.create')->withInput()->withErrors($validating);
+            if ($mobile == 'on') {
+                header('Content-Type: application/json');
+                $response['status'] = 0;
+                $response['message'] = $validating->messages();
+                echo json_encode($response);
+                die();
+            } else {
+                return Redirect::route('agenda.create')->withInput()->withErrors($validating);
+            }
         }
 
         $this->teacher_id = Input::get('teacher_id');
@@ -23,9 +33,22 @@ class Agenda extends Model {
         $this->time_start = Input::get('time_start');
         $this->time_end = Input::get('time_end');
         $this->description = Input::get('description');
-        $this->save();
 
-        return Redirect::route('agenda.index');
+        if($this->save()) {
+            $response['status'] = 1;
+            $response['message'] = "Data saved successfully.";
+        } else {
+            $response['status'] = 0;
+            $response['message'] = "An error occured, cannot save to database.";
+        }
+
+        if ($mobile == 'on') {
+            header('Content-Type: application/json');
+            echo json_encode($response);
+            die();
+        } else {
+            return Redirect::route('agenda.index');
+        }
 
     }
 
