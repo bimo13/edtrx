@@ -47,7 +47,7 @@
                     @endif
                     @if($user->hasAnyAccess(array('admin.timeline')))
                     <li>
-                        <a href="#"><i class="fa fa-line-chart"></i>TIMELINE</a>
+                        <a href="{{ URL::to('/timeline') }}"><i class="fa fa-line-chart"></i>TIMELINE</a>
                     </li>
                     @endif
                     @if($user->hasAnyAccess(array('admin.attendance')))
@@ -73,6 +73,11 @@
                     @if($user->hasAnyAccess(array('admin.gallery')))
                     <li>
                         <a href="{{ URL::to('/gallery') }}"><i class="fa fa-image"></i>GALLERY</a>
+                    </li>
+                    @endif
+                    @if($user->hasAnyAccess(array('admin.pinboard')))
+                    <li>
+                        <a href="{{ URL::to('/pinboard') }}"><i class="glyphicon glyphicon-pushpin"></i>PIN BOARD</a>
                     </li>
                     @endif
                     @if($user->hasAnyAccess(array('admin.inbox')))

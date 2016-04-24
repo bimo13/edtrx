@@ -11,6 +11,10 @@ class User extends Model {
         return $this->hasOne('UserDetail', 'user_id', 'id');
     }
 
+    public function timeline() {
+        return $this->hasMany('Timeline', 'user_id', 'id');
+    }
+
     public function scopeGetAllData($query) {
         // $query->select(array(
         //     'id',

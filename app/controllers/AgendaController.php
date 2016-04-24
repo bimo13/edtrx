@@ -58,7 +58,7 @@ class AgendaController extends BaseController {
     }
 
     public function destroy($id) {
-        //
+        return Agenda::deleteAgenda(array('id' => $id));
     }
 
     // END OF RESTful ROUTING

@@ -47,9 +47,7 @@ class Attendance extends Model {
         }
 
         if ($validating->fails()) {
-            return Redirect::route('attendance.index')->withInput()->withErrors($validating);
-        } else {
-            var_dump("expression");
+            return Redirect::route('attendance.create')->withInput()->withErrors($validating);
         }
 
         foreach (Input::get('student_id') as $student_id) {

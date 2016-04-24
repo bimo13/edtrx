@@ -63,7 +63,7 @@ class StudentsController extends BaseController {
 
 
     public function destroy($id) {
-        //
+        return Student::deleteStudent(array('id' => $id));
     }
 
     // END OF RESTful ROUTING

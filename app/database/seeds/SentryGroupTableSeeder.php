@@ -23,7 +23,8 @@ class SentryGroupTableSeeder extends Seeder {
                     'admin.gallery' => 1,
                     'admin.grade' => 1,
                     'admin.student' => 1,
-                    'admin.timeline' => 1
+                    'admin.timeline' => 1,
+                    'admin.pinboard' => 1
                 )
             )
         );

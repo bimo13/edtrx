@@ -35,8 +35,14 @@ class Agenda extends Model {
         $this->description = Input::get('description');
 
         if($this->save()) {
-            $response['status'] = 1;
-            $response['message'] = "Data saved successfully.";
+            $timeline = new Timeline;
+            if ($timeline->saveNewTimeline(array('user_id' => Input::get('teacher_id'), 'category' => 'agenda', 'post_id' => $this->id, 'publicity' => 'public'))) {
+                $response['status'] = 1;
+                $response['message'] = "Data saved successfully.";
+            } else {
+                $response['status'] = 1;
+                $response['message'] = "Data saved successfully, yet it failed to be saved into timline.";
+            }
         } else {
             $response['status'] = 0;
             $response['message'] = "An error occured, cannot save to database.";
@@ -70,6 +76,22 @@ class Agenda extends Model {
         $update->time_end = Input::get('time_end');
         $update->description = Input::get('description');
         $update->update();
+
+        return Redirect::route('agenda.index');
+
+    }
+
+    public function scopeDeleteAgenda($query,$params) {
+
+        $response = array();
+        $response['status'] = 0;
+        $response['message'] = "An error occured, please try again.";
+
+        if($this->destroy($params['id'])) {
+            Timeline::where('category', '=', 'agenda')->where('post_id', '=', $params['id'])->delete();
+            $response['status'] = 1;
+            $response['message'] = "Data has been deleted successfully.";
+        }
 
         return Redirect::route('agenda.index');
 

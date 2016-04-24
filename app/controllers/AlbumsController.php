@@ -6,13 +6,15 @@ class AlbumsController extends BaseController {
         return $rules = array(
             'name'       => 'required|max:255',
             'date_taken' => 'date',
-            'images'     => 'required'
+            'images'     => 'required',
+            'share_to'   => 'arrayofint',
         );
     }
 
     public function messagesList() {
         return $rules = array(
-            'images.required' => 'Either you haven\'t upload an image, or your image(s) size exceed 2Mb.'
+            'images.required' => 'Either you haven\'t upload an image, or your image(s) size exceed 2Mb.',
+            'share_to.arrayofint' => 'An error occured during saving your sharing list, please try again.'
         );
     }
 

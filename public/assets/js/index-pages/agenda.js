@@ -26,7 +26,7 @@ function getAgendaData(teacher_id,date) {
                     showAgenda += " ";
                     showAgenda += "[<a href=\""+base_url+"/agenda/"+data['data'][x]['id']+"/edit\">edit</a>]";
                     showAgenda += " ";
-                    showAgenda += "[<a href=\""+base_url+"/agenda/destroy/"+data['data'][x]['id']+"\">delete</a>]";
+                    showAgenda += "[<a href=\"javascript:void(0);\" data-toggle=\"modal\" data-target=\"#modal-delete\" data-id=\""+data['data'][x]['id']+"\" data-title=\"agenda\" data-preview=\""+data['data'][x]['description']+"\">delete</a>]";
                     showAgenda += "</td>";
                     showAgenda += "</tr>";
                     $("#schedule").append(showAgenda);
@@ -36,6 +36,22 @@ function getAgendaData(teacher_id,date) {
         dataType: "json"
     });
 }
+
+$('#modal-delete').on('show.bs.modal', function(e){
+    var btn = $(e.relatedTarget);
+    var id = btn.data('id');
+    var title = btn.data('title');
+    var preview = btn.data('preview');
+    var modal = $(this)
+
+    $("#form-delete").attr("action", base_url+"/agenda/"+id);
+
+    modal.find('.modal-body').empty();
+    modal.find('.modal-body').html('Are you sure want to delete this data ?<br />'+preview)
+    modal.find('#btn-delete').on('click', function(e){
+        window.location.replace("/admin/"+title+"/destroy/"+id);
+    });
+});
 
 // Populate data for current date
 $(document).ready(function() {

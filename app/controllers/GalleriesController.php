@@ -20,7 +20,8 @@ class GalleriesController extends BaseController {
 
     public function create() {
         $blankArray = array('' => '');
-        return View::make('gallery-form', compact('blankArray'));
+        $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+        return View::make('gallery-form', compact('blankArray', 'parents'));
     }
 
     public function store() {

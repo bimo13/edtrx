@@ -19,7 +19,11 @@ class Album extends Model {
 
     public function scopeSaveNewAlbum($query,$params) {
 
-        Input::merge(array_map('trim', Input::except('images')));
+        // $var = Input::get('share_to');
+        // var_dump($var);
+        // die();
+
+        Input::merge(array_map('trim', Input::except('images','share_to')));
 
         if (Input::hasFile('images'))
             $input = Input::all();
@@ -46,6 +50,13 @@ class Album extends Model {
             }
         }
 
+        Validator::extend('arrayofint', function($attribute, $value, $parameters) {
+            foreach($value as $v):
+                if (!preg_match('/^\d+$/',$v)) return false;
+            endforeach;
+            return true;
+        });
+
         $validating = Validator::make($input, $rules, $messages);
         if ($validating->fails()) {
             if ($mobile == 'on') {
@@ -59,10 +70,12 @@ class Album extends Model {
             }
         }
 
+        $this->teacher_id = Input::get('teacher_id');
         $this->name = Input::get('name');
         $this->description = Input::get('description');
         $this->venue = Input::get('venue');
         $this->date_taken = Input::get('date_taken');
+        $this->publicity = implode(',',Input::get('share_to'));
         $this->save();
 
         // Set album directory name
@@ -93,8 +106,14 @@ class Album extends Model {
             }
         }
 
-        $response['status'] = 1;
-        $response['message'] = "Data saved successfully.";
+        $timeline = new Timeline;
+        if ($timeline->saveNewTimeline(array('user_id' => Input::get('teacher_id'), 'category' => 'gallery', 'post_id' => $this->id, 'publicity' => 'public'))) {
+            $response['status'] = 1;
+            $response['message'] = "Data saved successfully.";
+        } else {
+            $response['status'] = 1;
+            $response['message'] = "Data saved successfully, yet it failed to be saved into timline.";
+        }
 
         if ($mobile == 'on') {
             header('Content-Type: application/json');

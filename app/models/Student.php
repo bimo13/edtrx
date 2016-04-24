@@ -12,6 +12,10 @@ class Student extends Model {
         return $this->belongsTo('Classes', 'class_id', 'id');
     }
 
+    public function studentParent() {
+        return $this->belongsTo('StudentParent', 'parent_id', 'id');
+    }
+
     public function scopeSaveNewStudent($query,$params) {
 
         $response = array();
@@ -167,6 +171,21 @@ class Student extends Model {
         } else {
             return Redirect::route('students.index');
         }
+
+    }
+
+    public function scopeDeleteStudent($query,$params) {
+
+        $response = array();
+        $response['status'] = 0;
+        $response['message'] = "An error occured, please try again.";
+
+        if($this->destroy($params['id'])) {
+            $response['status'] = 1;
+            $response['message'] = "Data has been deleted successfully.";
+        }
+
+        return Redirect::route('students.index');
 
     }
 

@@ -1,0 +1,60 @@
+<?php
+
+use DataTables\DataTablesCustom as DatatablesCustom;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+class PinboardController extends BaseController {
+
+    protected function redirectNotFound() {
+        return $this->redirect('pinboard.index')
+            ->withFlashMessage('Data not found, please try again.')
+            ->withFlashType('danger');
+    }
+
+    public function rulesList() {
+        return $rules = array(
+            'name'     => 'required|max:255',
+            'file'     => 'required',
+            'share_to' => 'arrayofint',
+        );
+    }
+
+    public function messagesList() {
+        return $rules = array(
+            'file.required' => 'You need to upload a file for this pinboard.',
+            'share_to.arrayofint' => 'An error occured during saving your sharing list, please try again.'
+        );
+    }
+
+    public function index() {
+        return View::make('pinboard');
+    }
+
+    public function create() {
+        $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+        return View::make('pinboard-form', compact('parents'));
+    }
+
+    public function store() {
+        return Pinboard::saveNewPinboard(array('input' => Input::all(), 'rules' => $this->rulesList(), 'messages' => $this->messagesList()));
+    }
+
+    public function show($id) {
+        //
+    }
+
+
+    public function edit($id) {
+        //
+    }
+
+
+    public function update($id) {
+        //
+    }
+
+
+    public function destroy($id) {
+        //
+    }
+}

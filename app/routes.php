@@ -44,6 +44,10 @@ Route::group(['before' => 'hasAccess:admin,admin.gallery'], function() {
     Route::resource('/gallery', 'GalleriesController');
 });
 
+Route::group(['before' => 'hasAccess:admin,admin.pinboard'], function() {
+    Route::resource('/pinboard', 'PinboardController');
+});
+
 Route::group(['before' => 'hasAccess:admin,admin.grade'], function() {
     Route::get('/grade', 'MainController@grade');
 });
@@ -54,7 +58,7 @@ Route::group(['before' => 'hasAccess:admin,admin.student'], function() {
 });
 
 Route::group(['before' => 'hasAccess:admin,admin.timeline'], function() {
-    Route::get('/timeline', 'MainController@timeline');
+    Route::resource('timeline', 'TimelineController');
 });
 
 Route::get('/account', 'MainController@account');
