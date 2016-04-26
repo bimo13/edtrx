@@ -63,3 +63,16 @@ Route::group(['before' => 'hasAccess:admin,admin.timeline'], function() {
 
 Route::get('/account', 'MainController@account');
 Route::get('/help', 'MainController@help');
+
+/*
+|--------------------------------------------------------------------------
+| Start API Routes
+|--------------------------------------------------------------------------
+|
+| Routes listed below are routes that will be accessed by API.
+|
+*/
+
+Route::get('/api/getTimeline/{parent_id}', 'ApiController@getTimeline');
+Route::get('/api/getGalleryAlbum/{album_id}', 'ApiController@getGalleryAlbum');
+Route::get('/api/getAgenda/{parent_id}/{date}', 'ApiController@getAgenda');

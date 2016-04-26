@@ -75,7 +75,12 @@ class Album extends Model {
         $this->description = Input::get('description');
         $this->venue = Input::get('venue');
         $this->date_taken = Input::get('date_taken');
-        $this->publicity = implode(',',Input::get('share_to'));
+        if (is_array(Input::get('share_to')) && Input::get('share_to') != "")
+            $publicity = implode(',',Input::get('share_to'));
+        else
+            $publicity = "public";
+
+        $this->publicity = $publicity;
         $this->save();
 
         // Set album directory name
@@ -107,7 +112,7 @@ class Album extends Model {
         }
 
         $timeline = new Timeline;
-        if ($timeline->saveNewTimeline(array('user_id' => Input::get('teacher_id'), 'category' => 'gallery', 'post_id' => $this->id, 'publicity' => 'public'))) {
+        if ($timeline->saveNewTimeline(array('user_id' => Input::get('teacher_id'), 'category' => 'gallery', 'post_id' => $this->id, 'publicity' => $publicity))) {
             $response['status'] = 1;
             $response['message'] = "Data saved successfully.";
         } else {
