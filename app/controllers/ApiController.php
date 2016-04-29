@@ -7,6 +7,40 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ApiController extends BaseController {
 
+    public function login() {
+
+        $response = array();
+
+        try {
+            $credentials = array(
+                'email'    => Input::get('email'),
+                'password' => Input::get('password'),
+            );
+
+            $user = Sentry::authenticate($credentials, false);
+            $response['status'] = 1;
+            $response['message'] = "You are now logged in.";
+        } catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
+            $response['status'] = 0;
+            $response['message'] = "Email field is required.";
+        } catch (Cartalyst\Sentry\Users\PasswordRequiredException $e) {
+            $response['status'] = 0;
+            $response['message'] = "Password field is required.";
+        } catch (Cartalyst\Sentry\Users\WrongPasswordException $e) {
+            $response['status'] = 0;
+            $response['message'] = "Password incorrect, try again.";
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            $response['status'] = 0;
+            $response['message'] = "User not found.";
+        } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
+            $response['status'] = 0;
+            $response['message'] = "User not activated.";
+        }
+
+        return json_encode($response);
+
+    }
+
     public function getTimeline($parent_id = NULL) {
 
         try {

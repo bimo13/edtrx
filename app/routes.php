@@ -73,6 +73,7 @@ Route::get('/help', 'MainController@help');
 |
 */
 
+Route::post('/api/login', 'ApiController@login');
 Route::get('/api/getTimeline/{parent_id}', 'ApiController@getTimeline');
 Route::get('/api/getGalleryAlbum/{album_id}', 'ApiController@getGalleryAlbum');
 Route::get('/api/getAgenda/{parent_id}/{date}', 'ApiController@getAgenda');
