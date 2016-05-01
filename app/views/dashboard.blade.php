@@ -80,6 +80,11 @@
                         <a href="{{ URL::to('/pinboard') }}"><i class="glyphicon glyphicon-pushpin"></i>PIN BOARD</a>
                     </li>
                     @endif
+                    @if($user->hasAnyAccess(array('admin.todo')))
+                    <li>
+                        <a href="{{ URL::to('/todo') }}"><i class="glyphicon glyphicon-file"></i>TO DO LIST</a>
+                    </li>
+                    @endif
                     @if($user->hasAnyAccess(array('admin.inbox')))
                     <li>
                         <a href="#"><i class="fa fa-inbox"></i>INBOX</a>

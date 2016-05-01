@@ -117,7 +117,7 @@ class Album extends Model {
             $response['message'] = "Data saved successfully.";
         } else {
             $response['status'] = 1;
-            $response['message'] = "Data saved successfully, yet it failed to be saved into timline.";
+            $response['message'] = "Data saved successfully, yet it failed to be saved into timeline.";
         }
 
         if ($mobile == 'on') {

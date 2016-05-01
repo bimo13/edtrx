@@ -64,7 +64,13 @@ class Pinboard extends Model {
             $this->file_path = $filePath;
             $this->file_name = $origName;
             $this->file_type = $fileType;
-            $this->publicity = implode(',',Input::get('share_to'));
+            if (is_array(Input::get('share_to')) && Input::get('share_to') != "") {
+                $publicity = implode(',',Input::get('share_to'));
+                $this->publicity = implode(',',Input::get('share_to'));
+            } else {
+                $publicity = "public";
+                $this->publicity = "public";
+            }
 
             if($this->save()) {
                 $response['status'] = 1;
@@ -72,6 +78,15 @@ class Pinboard extends Model {
             } else {
                 $response['status'] = 0;
                 $response['message'] = "An error occured, cannot save to database.";
+            }
+
+            $timeline = new Timeline;
+            if ($timeline->saveNewTimeline(array('user_id' => Input::get('teacher_id'), 'category' => 'pinboard', 'post_id' => $this->id, 'publicity' => $publicity))) {
+                $response['status'] = 1;
+                $response['message'] = "Data saved successfully.";
+            } else {
+                $response['status'] = 1;
+                $response['message'] = "Data saved successfully, yet it failed to be saved into timeline.";
             }
 
             if ($mobile == 'on') {

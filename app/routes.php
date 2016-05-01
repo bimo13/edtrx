@@ -48,6 +48,10 @@ Route::group(['before' => 'hasAccess:admin,admin.pinboard'], function() {
     Route::resource('/pinboard', 'PinboardController');
 });
 
+Route::group(['before' => 'hasAccess:admin,admin.todo'], function() {
+    Route::resource('/todo', 'ToDoController');
+});
+
 Route::group(['before' => 'hasAccess:admin,admin.grade'], function() {
     Route::get('/grade', 'MainController@grade');
 });
@@ -75,5 +79,11 @@ Route::get('/help', 'MainController@help');
 
 Route::post('/api/login', 'ApiController@login');
 Route::get('/api/getTimeline/{parent_id}', 'ApiController@getTimeline');
+Route::get('/api/getAlbum/{parent_id}', 'ApiController@getAlbum');
 Route::get('/api/getGalleryAlbum/{album_id}', 'ApiController@getGalleryAlbum');
 Route::get('/api/getAgenda/{parent_id}/{date}', 'ApiController@getAgenda');
+Route::get('/api/getPinboard/{parent_id}', 'ApiController@getPinboard');
+Route::get('/api/getPinboardDetail/{pinboard_id}', 'ApiController@getPinboardDetail');
+Route::get('/api/getToDoDates/{parent_id}', 'ApiController@getToDoDates');
+Route::get('/api/getToDo/{parent_id}/{date}', 'ApiController@getToDo');
+Route::get('/api/getToDoDetail/{todo_id}', 'ApiController@getToDoDetail');

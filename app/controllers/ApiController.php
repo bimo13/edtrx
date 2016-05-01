@@ -73,6 +73,40 @@ class ApiController extends BaseController {
 
     }
 
+    public function getAlbum($parent_id = NULL) {
+
+        try {
+
+            $parent = StudentParent::findOrFail($parent_id);
+            $teacher_id = $parent->Students[0]->Classes->teacher_id;
+            $albums = Album::where('teacher_id', '=', $teacher_id)->get();
+            $returnData = array();
+
+            foreach ($albums as $album) {
+                $publicity = explode(',',$album->publicity);
+                if ($publicity[0] == "public" || in_array($parent_id, $publicity)) {
+                    array_push($returnData, $album);
+                }
+            }
+
+            $data = array(
+                'data' => $returnData,
+                'message' => 'Data successfully retrieved.',
+                'status' => 1
+            );
+
+            $response = JsonResponse::create($data, 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+
+        } catch (ModelNotFoundException $e) {
+            $response = JsonResponse::create(array('message' => 'An error occured while parsing album data, please try again.', 'status' => 0), 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        }
+
+    }
+
     public function getGalleryAlbum($album_id = NULL) {
 
         try {
@@ -103,7 +137,6 @@ class ApiController extends BaseController {
     }
 
     public function getAgenda($parent_id = NULL, $date = NULL) {
-
         try {
             $parent = StudentParent::findOrFail($parent_id);
             $teacher_id = $parent->Students[0]->Classes->teacher_id;
@@ -126,7 +159,121 @@ class ApiController extends BaseController {
             $response->header('Content-Type', 'application/json');
             return $response;
         }
+    }
 
+    public function getPinboard($parent_id = NULL) {
+        try {
+            $parent = StudentParent::findOrFail($parent_id);
+            $teacher_id = $parent->Students[0]->Classes->teacher_id;
+            $pinboard = Pinboard::where('teacher_id', '=', $teacher_id)
+                                ->orderBy('created_at', 'desc')
+                                ->get();
+
+            $data = array(
+                'data' => $pinboard,
+                'message' => 'Data successfully retrieved.',
+                'status' => 1
+            );
+
+            $response = JsonResponse::create($data, 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        } catch (ModelNotFoundException $e) {
+            $response = JsonResponse::create(array('message' => 'An error occured while parsing user data, please try again.', 'status' => 0), 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        }
+    }
+
+    public function getPinboardDetail($id = NULL) {
+        try {
+            $pinboard = Pinboard::findOrFail($id);
+
+            $data = array(
+                'data' => $pinboard,
+                'message' => 'Data successfully retrieved.',
+                'status' => 1
+            );
+
+            $response = JsonResponse::create($data, 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        } catch (ModelNotFoundException $e) {
+            $response = JsonResponse::create(array('message' => 'An error occured while parsing data, please try again.', 'status' => 0), 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        }
+    }
+
+    public function getToDoDates($parent_id = NULL) {
+        try {
+            $parent = StudentParent::findOrFail($parent_id);
+            $teacher_id = $parent->Students[0]->Classes->teacher_id;
+            $tododates = ToDo::select('date')
+                                ->where('teacher_id', '=', $teacher_id)
+                                ->groupBy('date')
+                                ->orderBy('date', 'desc')
+                                ->get();
+
+            $data = array(
+                'data' => $tododates,
+                'message' => 'Data successfully retrieved.',
+                'status' => 1
+            );
+
+            $response = JsonResponse::create($data, 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        } catch (ModelNotFoundException $e) {
+            $response = JsonResponse::create(array('message' => 'An error occured while parsing user data, please try again.', 'status' => 0), 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        }
+    }
+
+    public function getToDo($parent_id = NULL, $date = NULL) {
+        try {
+            $parent = StudentParent::findOrFail($parent_id);
+            $teacher_id = $parent->Students[0]->Classes->teacher_id;
+            $todo = ToDo::where('teacher_id', '=', $teacher_id)
+                                ->where('date', '=', $date)
+                                ->orderBy('name')
+                                ->get();
+
+            $data = array(
+                'data' => $todo,
+                'message' => 'Data successfully retrieved.',
+                'status' => 1
+            );
+
+            $response = JsonResponse::create($data, 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        } catch (ModelNotFoundException $e) {
+            $response = JsonResponse::create(array('message' => 'An error occured while parsing user data, please try again.', 'status' => 0), 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        }
+    }
+
+    public function getToDoDetail($id = NULL) {
+        try {
+            $todo = ToDo::findOrFail($id);
+
+            $data = array(
+                'data' => $todo,
+                'message' => 'Data successfully retrieved.',
+                'status' => 1
+            );
+
+            $response = JsonResponse::create($data, 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        } catch (ModelNotFoundException $e) {
+            $response = JsonResponse::create(array('message' => 'An error occured while parsing data, please try again.', 'status' => 0), 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        }
     }
 
 }

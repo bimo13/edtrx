@@ -3,50 +3,46 @@
 use DataTables\DataTablesCustom as DatatablesCustom;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class PinboardController extends BaseController {
+class ToDoController extends BaseController {
 
     protected function redirectNotFound() {
-        return $this->redirect('pinboard.index')
+        return $this->redirect('todo.index')
             ->withFlashMessage('Data not found, please try again.')
             ->withFlashType('danger');
     }
 
     public function rulesList() {
         return $rules = array(
-            'name'     => 'required|max:255',
-            'file'     => 'required',
-            'share_to' => 'arrayofint',
+            'date'        => 'required|date',
+            'name'        => 'required|max:255',
+            'description' => 'required',
+            'share_to'    => 'arrayofint',
         );
     }
 
     public function messagesList() {
         return $rules = array(
-            'file.required' => 'You need to upload a file for this pinboard.',
+            'name.required'       => 'The task field is required.',
             'share_to.arrayofint' => 'An error occured during saving your sharing list, please try again.'
         );
     }
 
     public function index() {
-        $pinboards = Pinboard::get();
-        return View::make('pinboard', compact('pinboards'));
+        $todoDates = ToDo::select('date')->groupBy('date')->get();
+        return View::make('todo', compact('todoDates'));
     }
 
     public function create() {
         $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
-        return View::make('pinboard-form', compact('parents'));
+        return View::make('todo-form', compact('parents'));
     }
 
     public function store() {
-        return Pinboard::saveNewPinboard(array('input' => Input::all(), 'rules' => $this->rulesList(), 'messages' => $this->messagesList()));
+        return ToDo::saveNewToDo(array('input' => Input::all(), 'rules' => $this->rulesList(), 'messages' => $this->messagesList()));
     }
 
     public function show($id) {
-        try {
-            $pinboard = Pinboard::findOrFail($id);
-            return View::make('pinboard-detail', compact('pinboard'));
-        } catch (ModelNotFoundException $e) {
-            return Redirect::to('/pinboard/')->withErrors(array('msg' => 'Failed to parse pinboard data, please try again.'));
-        }
+        //
     }
 
 
