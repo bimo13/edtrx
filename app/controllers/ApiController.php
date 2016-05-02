@@ -10,34 +10,59 @@ class ApiController extends BaseController {
     public function login() {
 
         $response = array();
+        $input['email'] = Input::get('email');
+        $input['password'] = sha1(Input::get('password'));
 
-        try {
-            $credentials = array(
-                'email'    => Input::get('email'),
-                'password' => Input::get('password'),
+        $rules = array(
+            'email'    => 'required|email',
+            'password' => 'required'
+        );
+
+        $validating = Validator::make($input, $rules);
+        if ($validating->fails()) {
+            $data = array(
+                'message' => $validating->messages(),
+                'status' => 0
             );
 
-            $user = Sentry::authenticate($credentials, false);
-            $response['status'] = 1;
-            $response['message'] = "You are now logged in.";
+            $response = JsonResponse::create($data, 200, array(), JSON_PRETTY_PRINT);
+            $response->header('Content-Type', 'application/json');
+            return $response;
+        }
+
+        try {
+            $parent = StudentParent::where('email', '=', $input['email'])->where('password', '=', $input['password']);
+            if ($parent->count() != 1) {
+                $response['status'] = 0;
+                $response['message'] = "Username or password is incorrect, please try again.";
+            } else {
+                $parent = $parent->first();
+                $data = array(
+                    'id' => $parent->id,
+                    'first_name' => $parent->first_name,
+                    'last_name' => $parent->last_name,
+                    'address' => $parent->address,
+                    'phone_1' => $parent->phone_1,
+                    'phone_2' => $parent->phone_2,
+                    'photo' => $parent->photo,
+                    'email' => $parent->email
+                );
+                $response['data'] = $data;
+                $response['status'] = 1;
+                $response['message'] = "You are now logged in.";
+
+                $parent->session = 1;
+                $parent->update();
+
+            }
         } catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
             $response['status'] = 0;
             $response['message'] = "Email field is required.";
-        } catch (Cartalyst\Sentry\Users\PasswordRequiredException $e) {
-            $response['status'] = 0;
-            $response['message'] = "Password field is required.";
-        } catch (Cartalyst\Sentry\Users\WrongPasswordException $e) {
-            $response['status'] = 0;
-            $response['message'] = "Password incorrect, try again.";
-        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            $response['status'] = 0;
-            $response['message'] = "User not found.";
-        } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
-            $response['status'] = 0;
-            $response['message'] = "User not activated.";
         }
 
-        return json_encode($response);
+        $response = JsonResponse::create($response, 200, array(), JSON_PRETTY_PRINT);
+        $response->header('Content-Type', 'application/json');
+        return $response;
 
     }
 

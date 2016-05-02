@@ -3,6 +3,13 @@
 body {
     background-color: #f5f5f5;
 }
+
+.clr {
+    width: 100%;
+    clear: both;
+    float: none;
+}
+
 #formSearch .form-control {
     background-color: #252931;
     border-color: #252931;
@@ -698,7 +705,7 @@ body {
 }
 .galleryContainer {
     height: 550px;
-    overflow-y: auto;
+    overflow: auto;
 }
 .galleryContainer::-webkit-scrollbar {
     width: 5px;
@@ -725,6 +732,9 @@ body {
 .tetxttitle {
     font-size: 19px;
     font-weight: bold;
+}
+.textdate {
+    font-size: 14px;
 }
 .body-login {
     background-color: #252932;
