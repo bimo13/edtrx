@@ -36,4 +36,15 @@ class MainController extends BaseController {
         return View::make('help');
     }
 
+/*
+|--------------------------------------------------------------------------
+| New Layout
+|--------------------------------------------------------------------------
+|
+*/
+
+    public function newLayout() {
+        return View::make('new-dashboard');
+    }
+
 }

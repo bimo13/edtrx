@@ -1,0 +1,78 @@
+#gallery-form label,
+#gallery-form .text-info {
+    color: #848484;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+#gallery-form .text-info {
+    margin-top: -15px;
+    margin-left: 10px;
+}
+
+#gallery-form .form-group.gallery-form {
+    padding: 10px;
+    background-color: #FFFFFF;
+}
+
+#gallery-form .form-control {
+    background-color: #FFFFFF;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#gallery-form .input-group-addon {
+    color: #FFFFFF;
+    background-color: #52C7D1;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#gallery-form textarea {
+    resize: none;
+}
+
+#gallery-form .btn {
+    min-width: 150px;
+}
+
+#gallery-form .bootstrap-filestyle .btn {
+    color: #FFFFFF;
+    font-size: 14px;
+}
+
+.select2-container--default .select2-selection--multiple {
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+    border-color: #CCCCCC;
+}
+
+/* WORKAROUND on MultiFile plugin */
+#gallery-form input.image-input {
+    position: relative;
+    height: 58px;
+    width: 100%;
+    opacity: 0;
+    z-index: 2 !important;
+    cursor: pointer;
+}
+
+#gallery-form .add-photos {
+    position: absolute;
+    height: 58px;
+    width: calc(100% - 30px);
+    padding-top: 15px;
+
+    top: 25px;
+    left: 15px;
+    z-index: 1 !important;
+
+    text-align: center;
+    color: #C1C1C1;
+
+    border: dashed 2px #C1C1C1;
+    cursor: pointer;
+}

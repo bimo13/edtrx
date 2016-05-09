@@ -1,0 +1,52 @@
+#attendance-form .form-group.attendance-form {
+    padding: 5px;
+    background-color: #FFFFFF;
+}
+
+#attendance-form .form-control {
+    background-color: #FFFFFF;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#attendance-form .input-group-addon {
+    color: #FFFFFF;
+    background-color: #52C7D1;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#attendance-form .btn {
+    min-width: 150px;
+    height: 44px;
+}
+
+#table-attendance th {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#table-attendance td {
+    padding: 10px 18px;
+}
+
+#table-attendance .student-name {
+    font-weight: 600;
+}
+
+#table-attendance .student-information span {
+    float: left;
+}
+
+#table-attendance .student-information img {
+    float: left;
+    margin-right: 15px;
+    height: 40px;
+
+    -webkit-border-radius: 40px !important;
+       -moz-border-radius: 40px !important;
+            border-radius: 40px !important;
+}

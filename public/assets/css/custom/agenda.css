@@ -1,0 +1,113 @@
+.main {
+    padding: 0 !important;
+    top: 178px;
+}
+
+.dp-col {
+    position: fixed;
+    top: 80px;
+    bottom: 0;
+    left: 227px;
+    z-index: 1000;
+    display: block;
+    padding: 15px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-right: solid 1px #A4A4A4;
+
+    background-color: #DFDFDF;
+}
+
+.dp-box {
+    height: 306px;
+}
+
+.agenda-box {
+    position: fixed;
+    top: 80px;
+    padding: 20px;
+    background-color: #DFDFDF;
+    border-bottom: solid 4px #52C7D1;
+    z-index: 1000;
+}
+
+.schedule-box {
+    padding: 5px 30px 20px 85px;
+}
+
+#table-schedule {
+    width: 100%;
+}
+
+#table-schedule tr {
+    border-bottom: solid 1px #e6e6e6;
+    height: 40px;
+}
+
+#table-schedule td {
+    color: #848484;
+    font-size: 12px;
+    padding: 10px 0;
+}
+
+#table-schedule td.time {
+    width: 20%;
+    font-size: 16px;
+}
+
+#agenda-date {
+    color: #51BDC7;
+    font-size: 24px;
+}
+
+/* DATEPICKER */
+/* ========================================================================= */
+
+#agenda-datepicker.datepicker.dropdown-menu {
+    display: block;
+    box-shadow: none;
+    border: none;
+    width: 240px;
+    margin-left: calc(50% - 120px);
+    background-color: #dfdfdf;
+    border-radius: 0 !important;
+    position: relative !important;
+}
+#agenda-datepicker.datepicker:after,
+#agenda-datepicker.datepicker:before {
+    display: none !important;
+}
+#agenda-datepicker.datepicker td,
+#agenda-datepicker.datepicker th {
+    padding: 8px !important;
+    color: #939393 !important;
+}
+#agenda-datepicker.datepicker td.active.active {
+    background-color: #52C7D1 !important;
+    background-image: none !important;
+    border-radius: 50% !important;
+    width: 10% !important;
+    color: #FFFFFF !important;
+}
+#agenda-datepicker.datepicker td.old {
+    color: #BFBFBF !important;
+}
+#agenda-datepicker.datepicker th.dow {
+    color: #78CFD8 !important;
+}
+#agenda-datepicker.datepicker th.switch,
+#agenda-datepicker.datepicker th.prev,
+#agenda-datepicker.datepicker th.next {
+    color: #3A3A44 !important;
+}
+#agenda-datepicker.datepicker td span.month {
+    width: 55px !important;
+}
+#agenda-datepicker.datepicker td span.active {
+    background-color: #52C7D1 !important;
+    background-image: none !important;
+    border-radius: 50% !important;
+}
+#agenda-datepicker.datepicker td span.year {
+    width: 55px !important;
+}

@@ -79,4 +79,19 @@ class AgendaController extends BaseController {
         return $response;
     }
 
+/*
+|--------------------------------------------------------------------------
+| New Layout
+|--------------------------------------------------------------------------
+|
+*/
+
+    public function newLayout() {
+        return View::make('new-agenda');
+    }
+
+    public function newFormLayout() {
+        return View::make('new-agenda-form');
+    }
+
 }

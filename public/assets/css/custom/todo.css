@@ -1,0 +1,40 @@
+#todo-search-form .form-group.todo-form {
+    padding: 10px;
+    background-color: #FFFFFF;
+}
+
+#todo-search-form .form-group.todo-form {
+    padding: 10px;
+    background-color: #FFFFFF;
+}
+
+#todo-search-form .form-control {
+    background-color: #FFFFFF;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#todo-search-form .input-group-addon {
+    color: #FFFFFF;
+    background-color: #52C7D1;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+.add-todo-btn {
+    margin-top: 10px;
+    min-width: 150px;
+}
+
+.todo-view-date {
+    text-align: center;
+    color: #C1C1C1;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.btn-todo-edit {
+    width: 100px;
+}

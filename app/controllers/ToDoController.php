@@ -59,4 +59,22 @@ class ToDoController extends BaseController {
     public function destroy($id) {
         //
     }
+
+/*
+|--------------------------------------------------------------------------
+| New Layout
+|--------------------------------------------------------------------------
+|
+*/
+
+    public function newLayout() {
+        $todoDates = ToDo::select('date')->groupBy('date')->get();
+        return View::make('new-todo', compact('todoDates'));
+    }
+
+    // public function newFormLayout() {
+    //     $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+    //     return View::make('new-pinboard-form', compact('parents'));
+    // }
+
 }

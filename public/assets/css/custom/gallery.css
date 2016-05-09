@@ -1,0 +1,41 @@
+.cover {
+    width: 100%;
+    padding-bottom: 75%;
+
+    background-position: center;
+    -moz-background-size: cover;
+         background-size: cover;
+}
+
+.title {
+    width: 100%;
+    padding: 10px 10px 0;
+    background-color: #FFFFFF;
+
+    border-left: solid 1px #DDDDDD;
+    border-right: solid 1px #DDDDDD;
+}
+
+.title a {
+    display: block;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    text-decoration: none;
+}
+
+.date {
+    width: 100%;
+    padding: 0 10px 20px;
+    background-color: #FFFFFF;
+
+    border-left: solid 1px #DDDDDD;
+    border-right: solid 1px #DDDDDD;
+    border-bottom: solid 1px #DDDDDD;
+}

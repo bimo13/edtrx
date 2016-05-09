@@ -44,5 +44,22 @@ class GalleriesController extends BaseController {
         //
     }
 
+/*
+|--------------------------------------------------------------------------
+| New Layout
+|--------------------------------------------------------------------------
+|
+*/
+
+    public function newLayout() {
+        $albums = Album::getAllAlbum();
+        return View::make('new-gallery', compact('albums'));
+    }
+
+    public function newFormLayout() {
+        $blankArray = array('' => '');
+        $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+        return View::make('new-gallery-form', compact('blankArray', 'parents'));
+    }
 
 }

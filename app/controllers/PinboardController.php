@@ -63,4 +63,22 @@ class PinboardController extends BaseController {
     public function destroy($id) {
         //
     }
+
+/*
+|--------------------------------------------------------------------------
+| New Layout
+|--------------------------------------------------------------------------
+|
+*/
+
+    public function newLayout() {
+        $pinboards = Pinboard::get();
+        return View::make('new-pinboard', compact('pinboards'));
+    }
+
+    public function newFormLayout() {
+        $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+        return View::make('new-pinboard-form', compact('parents'));
+    }
+
 }

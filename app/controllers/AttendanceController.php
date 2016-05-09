@@ -40,5 +40,21 @@ class AttendanceController extends BaseController {
         //
     }
 
+/*
+|--------------------------------------------------------------------------
+| New Layout
+|--------------------------------------------------------------------------
+|
+*/
+
+    public function newLayout() {
+        return View::make('new-attendance');
+    }
+
+    public function newFormLayout() {
+        $classes = Attendance::getClassData();
+        $students = Attendance::getStudentsData();
+        return View::make('new-attendance-form', compact('classes', 'students'));
+    }
 
 }

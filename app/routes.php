@@ -87,3 +87,25 @@ Route::get('/api/getPinboardDetail/{pinboard_id}', 'ApiController@getPinboardDet
 Route::get('/api/getToDoDates/{parent_id}', 'ApiController@getToDoDates');
 Route::get('/api/getToDo/{parent_id}/{date}', 'ApiController@getToDo');
 Route::get('/api/getToDoDetail/{todo_id}', 'ApiController@getToDoDetail');
+
+
+/*
+|--------------------------------------------------------------------------
+| New Layout
+|--------------------------------------------------------------------------
+|
+| Routes listed below are routes of new layout.
+|
+*/
+
+Route::get('/new-layout', 'MainController@newLayout');
+Route::get('/new-layout/agenda', 'AgendaController@newLayout');
+Route::get('/new-layout/agenda-form', 'AgendaController@newFormLayout');
+Route::get('/new-layout/attendance', 'AttendanceController@newLayout');
+Route::get('/new-layout/attendance-form', 'AttendanceController@newFormLayout');
+Route::get('/new-layout/gallery', 'GalleriesController@newLayout');
+Route::get('/new-layout/gallery-form', 'GalleriesController@newFormLayout');
+Route::get('/new-layout/album-detail/{id}', 'AlbumsController@newAlbumDetail');
+Route::get('/new-layout/pinboard', 'PinboardController@newLayout');
+Route::get('/new-layout/pinboard-form', 'PinboardController@newFormLayout');
+Route::get('/new-layout/todo', 'ToDoController@newLayout');

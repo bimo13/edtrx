@@ -1,0 +1,33 @@
+#agenda-form label {
+    color: #848484;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+#agenda-form .form-group.agenda-form {
+    padding: 10px;
+    background-color: #FFFFFF;
+}
+
+#agenda-form .form-control {
+    background-color: #FFFFFF;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#agenda-form .input-group-addon {
+    color: #FFFFFF;
+    background-color: #52C7D1;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#agenda-form textarea {
+    resize: none;
+}
+
+#agenda-form .btn {
+    min-width: 150px;
+}

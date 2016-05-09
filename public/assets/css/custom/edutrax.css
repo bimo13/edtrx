@@ -1,0 +1,25 @@
+.btn-edutrax-cyan {
+    color           : #FFFFFF !important;
+    border-color    : #53C8D2 !important;
+    background-color: #53C8D2 !important;
+}
+
+.btn-edutrax-cyan:hover,
+.btn-edutrax-cyan:focus {
+    color           : #53C8D2 !important;
+    border-color    : #53C8D2 !important;
+    background-color: #FFFFFF !important;
+}
+
+.btn-edutrax-grey {
+    color           : #FFFFFF !important;
+    border-color    : #ABB4AF !important;
+    background-color: #ABB4AF !important;
+}
+
+.btn-edutrax-grey:hover,
+.btn-edutrax-grey:focus {
+    color           : #ABB4AF !important;
+    border-color    : #ABB4AF !important;
+    background-color: #FFFFFF !important;
+}

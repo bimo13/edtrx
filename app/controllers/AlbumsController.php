@@ -43,5 +43,22 @@ class AlbumsController extends BaseController {
         //
     }
 
+/*
+|--------------------------------------------------------------------------
+| New Layout
+|--------------------------------------------------------------------------
+|
+*/
+
+    public function newAlbumDetail($id) {
+        try {
+            $album = Album::findOrFail($id);
+            $galleries = Gallery::where('album_id', '=', $id)->get();
+            return View::make('new-album-detail', compact('album', 'galleries'));
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            $albums = Album::getAllAlbum();
+            return View::make('new-gallery', compact('albums'));
+        }
+    }
 
 }

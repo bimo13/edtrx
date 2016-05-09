@@ -102,21 +102,21 @@
 @stop
 
 @section('scripts')
-{{ HTML::script('assets/js/sa-datetimepicker/moment.js') }}
-{{ HTML::script('assets/js/sa-datetimepicker/transition.js') }}
-{{ HTML::script('assets/js/sa-datetimepicker/collapse.js') }}
-{{ HTML::script('assets/js/sa-datetimepicker/bootstrap-datetimepicker.min.js') }}
-<script type="text/javascript">
-    $(function () {
-        $('#agendaDate').datetimepicker({
-            format: 'YYYY/MM/DD',
-            ignoreReadonly: true
-        });
+    {{ HTML::script('assets/js/sa-datetimepicker/moment.js') }}
+    {{ HTML::script('assets/js/sa-datetimepicker/transition.js') }}
+    {{ HTML::script('assets/js/sa-datetimepicker/collapse.js') }}
+    {{ HTML::script('assets/js/sa-datetimepicker/bootstrap-datetimepicker.min.js') }}
+    <script type="text/javascript">
+        $(function () {
+            $('#agendaDate').datetimepicker({
+                format: 'YYYY/MM/DD',
+                ignoreReadonly: true
+            });
 
-        $('#agendaTS, #agendaTE').datetimepicker({
-            format: 'HH:mm',
-            ignoreReadonly: true
+            $('#agendaTS, #agendaTE').datetimepicker({
+                format: 'HH:mm',
+                ignoreReadonly: true
+            });
         });
-    });
-</script>
+    </script>
 @stop

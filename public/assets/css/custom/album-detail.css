@@ -1,0 +1,21 @@
+.album-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #848484;
+
+    margin: 0 0 10px;
+}
+
+.album-details {
+    font-size: 12px;
+    color: #848484;
+}
+
+.album-details p {
+    margin: 0 0 10px;
+    padding: 0;
+}
+
+.gallery-box {
+    border: dashed 2px #C1C1C1;
+}

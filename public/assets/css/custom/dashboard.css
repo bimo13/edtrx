@@ -1,0 +1,140 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    height: 100%;
+    padding-top: 50px;
+    background-color: #F5F5F5;
+
+    font-family: "Raleway";
+}
+
+.clear {
+    float: none;
+    width: 100%;
+    clear: both;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+    border: 0;
+    min-height: 80px;
+
+    color: #FFFFFF;
+    background-color: #EDA843;
+}
+
+.navbar-fixed-top a.navbar-brand {
+    color: #FFFFFF;
+    font-size: 22px;
+    line-height: 24px;
+
+    height: 80px;
+    padding: 28px;
+}
+
+.navbar-inverse .navbar-toggle {
+    margin-top: 23px;
+    border-color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-toggle:focus,
+.navbar-inverse .navbar-toggle:hover {
+    background-color: #FFFFFF;
+}
+
+.navbar-inverse .navbar-toggle:focus .icon-bar,
+.navbar-inverse .navbar-toggle:hover .icon-bar {
+    background-color: #EDA843;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #FFFFFF;
+
+    padding: 28px;
+    line-height: 24px;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+
+.sidebar {
+    position: fixed;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #383C48;
+    border-right: 1px solid #eee;
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+}
+.nav-sidebar > li > a {
+    padding-right: 20px;
+    padding-left: 20px;
+    color: #8F929B;
+    text-transform: uppercase;
+}
+.nav-sidebar > li > a:hover,
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+    color: #EDA843;
+    background-color: #252932;
+    border-right: 4px solid #EDA843;
+}
+.nav-sidebar > li > a > i.fa,
+.nav-sidebar > li > a > i.glyphicon {
+    margin-right: 15px;
+}
+
+/*
+ * Main content
+ */
+.main {
+    position: fixed;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.main::-webkit-scrollbar {
+    width: 5px;
+}
+.main::-webkit-scrollbar-track {
+    background-color: #ccc;
+    border-radius: 333px;
+}
+.main::-webkit-scrollbar-thumb {
+    border-radius: 333px;
+    background-color: #53C7D1;
+}
+
+@media (min-width: 768px) {
+    .main {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+}

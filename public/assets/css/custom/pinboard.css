@@ -1,0 +1,38 @@
+#pinboard-search-form .form-group.pinboard-search-form {
+    padding: 10px;
+    background-color: #FFFFFF;
+}
+
+.add-board-btn {
+    margin-top: 10px;
+    min-width: 150px;
+}
+
+.pinboard-name {
+    padding: 5px 5px 0 !important;
+
+    font-weight: 600;
+
+    border-left: solid 1px #C1C1C1;
+    border-right: solid 1px #C1C1C1;
+
+    background-color: #FFFFFF;
+
+    display: block;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pinboard-date {
+    padding: 0 5px 5px !important;
+
+    font-size: 12px;
+
+    border-left: solid 1px #C1C1C1;
+    border-right: solid 1px #C1C1C1;
+    border-bottom: solid 1px #C1C1C1;
+
+    background-color: #FFFFFF;
+}
