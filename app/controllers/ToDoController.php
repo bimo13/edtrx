@@ -28,13 +28,15 @@ class ToDoController extends BaseController {
     }
 
     public function index() {
+        $user = Sentry::getUser();
         $todoDates = ToDo::select('date')->groupBy('date')->get();
-        return View::make('todo', compact('todoDates'));
+        return View::make('todo', compact('user', 'todoDates'));
     }
 
     public function create() {
+        $user = Sentry::getUser();
         $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
-        return View::make('todo-form', compact('parents'));
+        return View::make('todo-form', compact('user', 'parents'));
     }
 
     public function store() {

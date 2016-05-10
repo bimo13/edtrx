@@ -28,7 +28,16 @@ class AlbumsController extends BaseController {
     }
 
     public function show($id) {
-        echo"welcome";
+        try {
+            $user = Sentry::getUser();
+            $album = Album::findOrFail($id);
+            $galleries = Gallery::where('album_id', '=', $id)->get();
+            return View::make('album-detail', compact('user', 'album', 'galleries'));
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            $user = Sentry::getUser();
+            $albums = Album::getAllAlbum();
+            return View::make('gallery', compact('user', 'albums'));
+        }
     }
 
     public function edit($id) {

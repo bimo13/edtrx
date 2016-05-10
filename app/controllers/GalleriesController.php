@@ -12,16 +12,16 @@ class GalleriesController extends BaseController {
     }
 
     public function index() {
-        // $trim = Trim::GetTrim("Lorem Ipsum Dolor",10);
-        // var_dump($trim); die();
+        $user = Sentry::getUser();
         $albums = Album::getAllAlbum();
-        return View::make('gallery', compact('albums'));
+        return View::make('gallery', compact('user', 'albums'));
     }
 
     public function create() {
+        $user = Sentry::getUser();
         $blankArray = array('' => '');
         $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
-        return View::make('gallery-form', compact('blankArray', 'parents'));
+        return View::make('gallery-form', compact('user', 'blankArray', 'parents'));
     }
 
     public function store() {

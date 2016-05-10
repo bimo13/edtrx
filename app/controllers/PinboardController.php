@@ -27,13 +27,15 @@ class PinboardController extends BaseController {
     }
 
     public function index() {
+        $user = Sentry::getUser();
         $pinboards = Pinboard::get();
-        return View::make('pinboard', compact('pinboards'));
+        return View::make('pinboard', compact('user', 'pinboards'));
     }
 
     public function create() {
+        $user = Sentry::getUser();
         $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
-        return View::make('pinboard-form', compact('parents'));
+        return View::make('pinboard-form', compact('user', 'parents'));
     }
 
     public function store() {

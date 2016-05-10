@@ -22,7 +22,8 @@ class AgendaController extends BaseController {
     }
 
     public function index() {
-        return View::make('agenda');
+        $user = Sentry::getUser();
+        return View::make('agenda', compact('user'));
     }
 
     public function create() {

@@ -11,13 +11,15 @@ class AttendanceController extends BaseController {
     }
 
     public function index() {
-        return View::make('attendance');
+        $user = Sentry::getUser();
+        return View::make('attendance', compact('user'));
     }
 
     public function create() {
+        $user = Sentry::getUser();
         $classes = Attendance::getClassData();
         $students = Attendance::getStudentsData();
-        return View::make('attendance-form', compact('classes', 'students'));
+        return View::make('attendance-form', compact('user', 'classes', 'students'));
     }
 
     public function store() {
@@ -52,9 +54,10 @@ class AttendanceController extends BaseController {
     }
 
     public function newFormLayout() {
+        $user = Sentry::getUser();
         $classes = Attendance::getClassData();
         $students = Attendance::getStudentsData();
-        return View::make('new-attendance-form', compact('classes', 'students'));
+        return View::make('new-attendance-form', compact('user', 'classes', 'students'));
     }
 
 }

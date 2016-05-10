@@ -1,46 +1,55 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
     <head>
+        <title>
+            eduTRAX - @yield('title')
+        </title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Edutrax</title>
-        {{ HTML::style('assets/css/bootstrap.css') }}
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Bootstrap core CSS -->
+        {{ HTML::style('assets/css/bootstrap/bootstrap.min.css') }}
         {{ HTML::style('assets/css/font-awesome.min.css') }}
         {{ HTML::style('assets/css/my.css') }}
-        {{ HTML::style('assets/css/custom.css') }}
+        {{ HTML::style('assets/css/custom/dashboard.css') }}
+        {{ HTML::style('assets/css/custom/edutrax.css') }}
+
         @yield('styles')
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
     </head>
     <body>
-        <?php $user = Sentry::getUser(); ?>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 col-xs-12 topbar-nav">
-                    <div class="col-md-2 logoContainer">
 
-                        <button class="btn hidden-lg hidden-md hidden-sm menuToggle"><i class="fa fa-bars"></i> </button>
-                        <a href="" style="text-decoration: none"><h2>EDU<b>TRACK</b></h2></a>
-                    </div>
-                    <div class="col-md-5 hidden-xs">
-                        <span>HI, {{ $user->first_name; }} {{ $user->last_name; }}</span>
-                    </div>
-                    <div class="col-md-5 hidden-xs form-right">
-                        <div class="input-group text-search">
-                            <input type="text" class="form-control" id="searchText" />
-                            <div class="input-group-addon" id="searchToggle"><i class="fa fa-search"></i></div>
-                        </div>
-                        <div class="config">
-                            <a href="#"><i class="fa fa-cog"></i></a>
-                        </div>
-                    </div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">EDU<b>TRAX</b></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#"><i class="glyphicon glyphicon-off"></i></a></li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        <div id="wrapper">
+        </nav>
 
-            <!-- Sidebar -->
-            <div id="sidebar-wrapper">
-                <ul class="sidebar-nav">
-                    @if($user->hasAnyAccess(array('admin')))
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2 sidebar">
+                    <ul class="nav nav-sidebar">
+                        @if($user->hasAnyAccess(array('admin')))
                     <li>
                         <a href="{{ URL::to('/classes') }}"><i class="fa fa-graduation-cap"></i>CLASSES</a>
                     </li>
@@ -99,42 +108,44 @@
                     </li>
                     @endif
                     <li>
-                        <a href="{{ URL::to('/account') }}"><img src="{{ asset('assets/img/user.png') }}" alt="..." class="img-circle" style="width: 40px;height: auto">ACCOUNT</a>
+                        <a href="{{ URL::to('/account') }}"><i class="fa fa-user"></i>ACCOUNT</a>
                     </li>
-                </ul>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <div class="col-sm-10 col-sm-offset-2 main">
+                    @yield('main-content')
+                </div>
             </div>
-            <!-- /#sidebar-wrapper -->
+        </div>
 
-            <!-- Page Content -->
-            <div id="page-content-wrapper">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @yield('web-content')
-                            <!-- {{ Sentry::getUser() }} -->
-                        </div>
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal-delete">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Confirm Deletion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p></p>
+                    </div>
+                    <div class="modal-footer">
+                        {{ Form::open(['method' => 'DELETE', 'id' => 'form-delete'])}}
+                            <button type="submit" class="btn btn-danger">Yes</button>
+                            <button type="button" class="btn btn-grey" data-dismiss="modal">No</button>
+                        {{ Form::close() }}
                     </div>
                 </div>
             </div>
-            <!-- /#page-content-wrapper -->
-
         </div>
 
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
         {{ HTML::script('assets/js/jquery.js') }}
-        {{ HTML::script('assets/js/bootstrap.min.js') }}
+        {{ HTML::script('assets/js/bootstrap/bootstrap.min.js') }}
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        {{ HTML::script('assets/js/bootstrap/ie10-viewport-bug-workaround.js') }}
         @yield('scripts')
-
-        <script>
-            $(".menuToggle").click(function (e) {
-                e.preventDefault();
-                $("#sidebar-wrapper").toggleClass("in");
-            });
-            $(".input-group-addon#searchToggle").click(function (e) {
-                e.preventDefault();
-                $("#searchText").toggleClass("active").focus();
-                $(this).toggleClass("active");
-            });
-
-        </script>
     </body>
 </html>

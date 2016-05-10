@@ -1,64 +1,74 @@
 @extends('dashboard')
 
-@section('styles')
-{{ HTML::style('assets/css/select2.css') }}
+@section('title')
+    Pinboard
 @stop
 
-@section('web-content')
+@section('styles')
+    {{ HTML::style('assets/css/select2.css') }}
+    {{ HTML::style('assets/css/custom/pinboard-form.css') }}
+@stop
 
-<div class="container-fluid">
-    <div class="col-lg-12">
-        <div class="main-form-wrapper" >
-            @if(isset($model))
-                {{ Form::model($model, array('method' => 'PUT', 'files' => true, 'route' => array('pinboard.update', $model->id))) }}
-            @else
-                {{ Form::open(array('method' => 'POST', 'route' => array('pinboard.store'), 'files' => 'true', 'autocomplete' => 'off')) }}
-            @endif
-
-                    {{ Form::hidden('teacher_id', Sentry::getUser()->id) }}
-                    <div class="form-group">
-                        {{ Form::label('name', 'Board Name:') }}
+@section('main-content')
+    <div class="row">
+        @if(isset($model))
+            {{ Form::model($model, array('id' => 'pinboard-form', 'method' => 'PUT', 'route' => array('pinboard.update', $model->id), 'autocomplete' => 'off')) }}
+        @else
+            {{ Form::open(array('id' => 'pinboard-form', 'method' => 'POST', 'url' => 'pinboard', 'autocomplete' => 'off')) }}
+        @endif
+                <div class="col-sm-12">
+                    {{ Form::label('name', 'Board Name:') }}
+                    <div class="form-group pinboard-form">
                         {{ Form::text('name', null, array('class' => 'form-control')) }}
                         {{ $errors->first('name', '<div class="text-danger">:message</div>') }}
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        {{ Form::label('description', 'Description:') }}
-                        {{ Form::textarea('description', null, array('class' => 'form-control')) }}
+                <div class="col-lg-12">
+                    {{ Form::label('description', 'Description:') }}
+                    <div class="form-group agenda-form">
+                        @if(isset($model))
+                            {{ Form::textarea('description', null, array('class' => 'form-control')) }}
+                        @else
+                            {{ Form::textarea('description', null, array('class' => 'form-control')) }}
+                        @endif
                         {{ $errors->first('description', '<div class="text-danger">:message</div>') }}
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        {{ Form::label('file', 'File:') }}
-                        {{ Form::file('file', array('class' => 'filestyle', 'data-buttonText' => '&nbsp;&nbsp;Browse', 'data-buttonName' => 'btn-primary')) }}
+                <div class="col-sm-12">
+                    {{ Form::label('file', 'Attach File:') }}
+                    <div class="form-group pinboard-form">
+                        {{ Form::file('file', array('class' => 'filestyle', 'data-buttonText' => '&nbsp;&nbsp;Browse', 'data-buttonName' => 'btn-edutrax-cyan')) }}
                         {{ $errors->first('file', '<div class="text-danger">:message</div>') }}
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        {{ Form::label('share_to', 'Share to:') }}
+                <div class="col-sm-12">
+                    {{ Form::label('share_to', 'Sharing Option:') }}
+                    <div class="form-group pinboard-form">
                         {{ Form::select('share_to[]', $parents, null, array('id' => 'share_to', 'class' => 'form-control', 'multiple' => 'multiple')) }}
                         {{ $errors->first('share_to', '<div class="text-danger">:message</div>') }}
-                        <div class="text-info">*leave blank to set pinboard as public</div>
                     </div>
+                    <div class="text-info">*leave blank to set gallery as public</div>
+                </div>
 
-                    <div class="form-group">
-                        {{ Form::submit('Save', array('class' => 'btn btn-primary')) }}
+                <div class="col-lg-12 mg-top-35px">
+                    <div class="form-group text-right">
+                        {{ Form::submit('Create Board', array('class' => 'btn roundless btn-edutrax-cyan')) }}
+                        <a href="javascript:void(0);" class="btn roundless btn-edutrax-grey">Cancel</a>
                     </div>
-
-            <!-- conditional-lines indent -->
-                {{ Form::close() }}
-            <!-- conditional-lines indent -->
-        </div>
+                </div>
+        <!-- conditional-lines indent -->
+            {{ Form::close() }}
+        <!-- conditional-lines indent -->
     </div>
-</div>
-
 @stop
 
 @section('scripts')
-<!-- JQuery Bootstrap.Filestyle -->
-{{ HTML::script('assets/js/forms.filestyle.js') }}
-{{ HTML::script('assets/js/select2.js') }}
-<script type="text/javascript">
-    $("#share_to").select2();
-</script>
+    {{ HTML::script('assets/js/forms.filestyle.js') }}
+    {{ HTML::script('assets/js/select2.js') }}
+    <script type="text/javascript">
+        $("#share_to").select2();
+    </script>
 @stop

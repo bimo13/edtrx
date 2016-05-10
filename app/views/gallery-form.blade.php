@@ -1,91 +1,104 @@
 @extends('dashboard')
 
-@section('styles')
-{{ HTML::style('assets/css/select2.css') }}
+@section('title')
+    Gallery
 @stop
 
-@section('web-content')
-<div class="container-fluid">
-    <div class="col-lg-12">
-        <div class="main-form-wrapper" >
-            @if(isset($model))
-                {{ Form::model($model, array('method' => 'PUT', 'files' => true, 'route' => array('album.update', $model->id))) }}
-            @else
-                {{ Form::open(array('method' => 'POST', 'route' => array('album.store'), 'files' => 'true', 'autocomplete' => 'off')) }}
-            @endif
+@section('styles')
+    {{ HTML::style('assets/css/sa-datetimepicker/bootstrap-datetimepicker.min.css') }}
+    {{ HTML::style('assets/css/select2.css') }}
+    {{ HTML::style('assets/css/custom/gallery-form.css') }}
+@stop
 
-                    {{ Form::hidden('teacher_id', Sentry::getUser()->id) }}
-                    <div class="form-group">
-                        {{ Form::label('name', 'Album Name:') }}
-                        {{ Form::text('name', null, array('class' => 'form-control')) }}
-                        {{ $errors->first('name', '<div class="text-danger">:message</div>') }}
-                    </div>
+@section('main-content')
 
-                    <div class="form-group">
-                        {{ Form::label('description', 'Description:') }}
-                        {{ Form::textarea('description', null, array('class' => 'form-control')) }}
-                        {{ $errors->first('description', '<div class="text-danger">:message</div>') }}
-                    </div>
+    @if(isset($model))
+        {{ Form::model($model, array('method' => 'PUT', 'id' => 'gallery-form', 'files' => true, 'route' => array('album.update', $model->id))) }}
+    @else
+        {{ Form::open(array('method' => 'POST', 'id' => 'gallery-form', 'route' => array('album.store'), 'files' => 'true', 'autocomplete' => 'off')) }}
+    @endif
 
-                    <div class="form-group">
-                        {{ Form::label('venue', 'Venue:') }}
-                        {{ Form::text('venue', null, array('class' => 'form-control')) }}
-                        {{ $errors->first('venue', '<div class="text-danger">:message</div>') }}
-                    </div>
 
-                    <div class="form-group">
-                        {{ Form::label('date_taken', 'Date Taken:') }}
-                        {{ Form::text('date_taken', null, array('class' => 'form-control')) }}
-                        {{ $errors->first('date_taken', '<div class="text-danger">:message</div>') }}
-                    </div>
+            {{ Form::hidden('teacher_id', Sentry::getUser()->id) }}
+            <div class="col-sm-12">
+                {{ Form::label('name', 'Album Name :') }}
+                <div class="form-group gallery-form">
+                    {{ Form::text('name', null, array('class' => 'form-control')) }}
+                    {{ $errors->first('name', '<div class="text-danger">:message</div>') }}
+                </div>
+            </div>
 
-                    <div class="form-group">
-                        {{ Form::label('images', 'Images:') }}
-                        {{ $errors->first('images', '<div class="text-danger">:message</div>') }}
-                        {{ Form::file('images[0]', array('class' => 'filestyle', 'data-buttonText' => '&nbsp;&nbsp;Browse', 'data-buttonName' => 'btn-primary')) }}
-                        {{ $errors->first('images.0', '<div class="text-danger">:message</div>') }}
-                    </div>
-                    <div class="form-group">
-                        {{ Form::file('images[1]', array('class' => 'filestyle', 'data-buttonText' => '&nbsp;&nbsp;Browse', 'data-buttonName' => 'btn-primary')) }}
-                        {{ $errors->first('images.1', '<div class="text-danger">:message</div>') }}
-                    </div>
-                    <div class="form-group">
-                        {{ Form::file('images[2]', array('class' => 'filestyle', 'data-buttonText' => '&nbsp;&nbsp;Browse', 'data-buttonName' => 'btn-primary')) }}
-                        {{ $errors->first('images.2', '<div class="text-danger">:message</div>') }}
-                    </div>
-                    <div class="form-group">
-                        {{ Form::file('images[3]', array('class' => 'filestyle', 'data-buttonText' => '&nbsp;&nbsp;Browse', 'data-buttonName' => 'btn-primary')) }}
-                        {{ $errors->first('images.3', '<div class="text-danger">:message</div>') }}
-                    </div>
-                    <div class="form-group">
-                        {{ Form::file('images[4]', array('class' => 'filestyle', 'data-buttonText' => '&nbsp;&nbsp;Browse', 'data-buttonName' => 'btn-primary')) }}
-                        {{ $errors->first('images.4', '<div class="text-danger">:message</div>') }}
-                    </div>
+            <div class="col-sm-12">
+                {{ Form::label('description', 'Description:') }}
+                <div class="form-group gallery-form">
+                    {{ Form::textarea('description', null, array('class' => 'form-control')) }}
+                    {{ $errors->first('description', '<div class="text-danger">:message</div>') }}
+                </div>
+            </div>
 
-                    <div class="form-group">
-                        {{ Form::label('share_to', 'Share to:') }}
-                        {{ Form::select('share_to[]', $parents, null, array('id' => 'share_to', 'class' => 'form-control', 'multiple' => 'multiple')) }}
-                        {{ $errors->first('share_to', '<div class="text-danger">:message</div>') }}
-                        <div class="text-info">*leave blank to set gallery as public</div>
-                    </div>
+            <div class="col-sm-12">
+                {{ Form::label('venue', 'Venue :') }}
+                <div class="form-group gallery-form">
+                    {{ Form::text('venue', null, array('class' => 'form-control')) }}
+                    {{ $errors->first('venue', '<div class="text-danger">:message</div>') }}
+                </div>
+            </div>
 
-                    <div class="form-group">
-                        {{ Form::submit('Save', array('class' => 'btn btn-primary')) }}
+            <div class="col-sm-5">
+                {{ Form::label('date', 'Date:') }}
+                <div class="form-group gallery-form">
+                    <div class='input-group date' id='agendaDate'>
+                        {{ Form::text('date', null, array('class' => 'form-control', 'readonly')) }}
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
                     </div>
+                    {{ $errors->first('date', '<div class="text-danger">:message</div>') }}
+                </div>
+            </div>
 
-            <!-- conditional-lines indent -->
-                {{ Form::close() }}
-            <!-- conditional-lines indent -->
-        </div>
-    </div>
-</div>
+            <div class="col-sm-7">
+                {{ Form::label('share_to', 'Sharing Option:') }}
+                <div class="form-group gallery-form">
+                    {{ Form::select('share_to[]', $parents, null, array('id' => 'share_to', 'class' => 'form-control', 'multiple' => 'multiple')) }}
+                    {{ $errors->first('share_to', '<div class="text-danger">:message</div>') }}
+                </div>
+                <div class="text-info">*leave blank to set gallery as public</div>
+            </div>
+
+            <div class="col-sm-12">
+                {{ Form::label('images', 'Add Photos:') }}
+                <div class="form-group">
+                    <div class="add-photos"><i class="fa fa-2x fa-cloud-upload"></i></div>
+                    {{ Form::file('images', array('class' => 'image-input')) }}
+                    {{ $errors->first('images', '<div class="text-danger">:message</div>') }}
+                </div>
+            </div>
+
+            <div class="col-lg-12 mg-top-35px">
+                <div class="form-group text-right">
+                    {{ Form::submit('Create Album', array('class' => 'btn roundless btn-edutrax-cyan')) }}
+                    <a href="javascript:void(0);" class="btn roundless btn-edutrax-grey">Cancel</a>
+                </div>
+            </div>
+
+    <!-- conditional-lines indent -->
+        {{ Form::close() }}
+    <!-- conditional-lines indent -->
+
 @stop
 
 @section('scripts')
-<!-- JQuery Bootstrap.Filestyle -->
-{{ HTML::script('assets/js/forms.filestyle.js') }}
-{{ HTML::script('assets/js/select2.js') }}
-<script type="text/javascript">
-    $("#share_to").select2();
-</script>
+    <!-- JQuery Bootstrap.Filestyle -->
+    {{ HTML::script('assets/js/forms.filestyle.js') }}
+    {{ HTML::script('assets/js/select2.js') }}
+    {{ HTML::script('assets/js/multifile/jquery.MultiFile.js') }}
+    <script type="text/javascript">
+        $("#share_to").select2();
+        $(".image-input").MultiFile({
+            accept: 'jpg|png|gif',
+            preview: true,
+            previewCss: 'border: solid 1px #C1C1C1; width: 100%; padding-bottom: 100%; background-size: cover;'
+        });
+    </script>
 @stop

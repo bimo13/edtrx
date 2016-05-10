@@ -1,41 +1,24 @@
 @extends('dashboard')
 
-@section('styles')
-{{ HTML::style('assets/css/datatables/jquery.dataTables.css') }}
-{{ HTML::style('assets/css/sa-datetimepicker/bootstrap-datetimepicker.min.css') }}
+@section('title')
+    Attendance
 @stop
 
-@section('web-content')
-<div class="container-fluid">
-    <!-- ======================================================================================== -->
-    <div class="col-lg-3 text-right">
-        View by date:
+@section('styles')
+    {{ HTML::style('assets/css/datatables/jquery.dataTables.css') }}
+    {{ HTML::style('assets/css/sa-datetimepicker/bootstrap-datetimepicker.min.css') }}
+    {{ HTML::style('assets/css/custom/attendance.css') }}
+@stop
+
+@section('main-content')
+
+    <div class="col-sm-12 mg-bottom-10px">
+        <button class="btn btn-edutrax-cyan roundless" id="search-btn" data-toggle="modal" data-target="#modal-search"><i class="fa fa-search"></i> Search</button>
+        <button class="btn btn-edutrax-cyan roundless" id="refresh-btn">Refresh Table / Clear Search</button>
+        <a href="{{ URL::route('attendance.create') }}" class="btn btn-edutrax-cyan roundless pull-right"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;Add New</a>
     </div>
-    <div class="col-lg-7">
-        <div class="form-group">
-            <div class="input-group date" id="attendanceDate">
-                {{ Form::text('date', null, array('class' => 'form-control', 'readonly')) }}
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-            {{ $errors->first('date', '<div class="text-danger">:message</div>') }}
-        </div>
-    </div>
-    <div class="col-lg-2">
-        <div class="form-group">
-            {{ Form::submit('Submit', array('class' => 'btn btn-primary btn-block')) }}
-        </div>
-    </div>
-    <!-- ======================================================================================== -->
-    <div class="col-sm-6">
-        <button data-toggle="modal" data-target="#modal-search" class="btn btn-flat" id="search-btn"><i class="fa fa-search"></i> Search</button>
-        <button class="btn btn-flat" id="refresh-btn">Refresh Table / Clear Search</button>
-    </div>
-    <div class="col-sm-6 text-right">
-        <button class="btn btn-flat" onclick="window.location.href='{{ URL::route('attendance.create') }}'"><i class="fa fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;Add New</button>
-    </div>
-    <div class="col-lg-12">
+
+    <div class="col-sm-12">
 
         <table id="datatables" class="table table-bordered table-condensed table-striped">
             <thead>
@@ -48,16 +31,15 @@
         </table>
 
     </div>
-</div>
+
 @stop
 
 @section('scripts')
 <script type="text/javascript">var base_url = "{{ url() }}";</script>
-{{ HTML::script('assets/js/icheck/icheck.min.js') }}
 {{ HTML::script('assets/js/sa-datetimepicker/moment.js') }}
 {{ HTML::script('assets/js/sa-datetimepicker/transition.js') }}
 {{ HTML::script('assets/js/sa-datetimepicker/collapse.js') }}
 {{ HTML::script('assets/js/sa-datetimepicker/bootstrap-datetimepicker.min.js') }}
 {{ HTML::script('assets/js/datatables/jquery.dataTables.min.js') }}
-{{ HTML::script('assets/js/index-pages/attendance.js') }}
+{{ HTML::script('assets/js/custom/attendance.js') }}
 @stop

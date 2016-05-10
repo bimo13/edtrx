@@ -7,17 +7,8 @@ class MainController extends BaseController {
     }
 
     public function dashboard() {
-        // try {
-        //     $user = Sentry::getUser();
-        //     // $user = Sentry::findUserByID(1);
-        //     $userGroup = $user->hasAccess('admin');
-        // } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-        //     echo 'User was not found.';
-        // }
-
-        // var_dump($userGroup); die();
-
-        return View::make('dashboard');
+        $user = Sentry::getUser();
+        return View::make('dashboard', compact('user'));
     }
 
     public function account() {
