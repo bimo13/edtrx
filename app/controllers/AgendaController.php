@@ -27,8 +27,9 @@ class AgendaController extends BaseController {
     }
 
     public function create() {
+        $user = Sentry::getUser();
         $blankArray = array('' => '');
-        return View::make('agenda-form', compact('blankArray'));
+        return View::make('agenda-form', compact('user', 'blankArray'));
     }
 
     public function store() {

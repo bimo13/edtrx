@@ -5,7 +5,7 @@
 @stop
 
 @section('styles')
-    {{ HTML::style('assets/css/select2.css') }}
+    {{ HTML::style('assets/css/select2/select2.css') }}
     {{ HTML::style('assets/css/custom/pinboard-form.css') }}
 @stop
 
@@ -26,7 +26,7 @@
 
                 <div class="col-lg-12">
                     {{ Form::label('description', 'Description:') }}
-                    <div class="form-group agenda-form">
+                    <div class="form-group pinboard-form">
                         @if(isset($model))
                             {{ Form::textarea('description', null, array('class' => 'form-control')) }}
                         @else

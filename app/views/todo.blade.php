@@ -24,7 +24,7 @@
         {{ Form::close() }}
     </div>
     <div class="col-sm-4 col-sm-offset-4">
-        <a href="javascript:void(0);" class="btn btn-edutrax-cyan roundless add-todo-btn pull-right">
+        <a href="{{ URL::route('todo.create') }}" class="btn btn-edutrax-cyan roundless add-todo-btn pull-right">
             <i class="fa fa-plus-circle"></i>&nbsp;&nbsp;&nbsp;Add New Task
         </a>
     </div>

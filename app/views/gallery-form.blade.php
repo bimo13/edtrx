@@ -5,8 +5,8 @@
 @stop
 
 @section('styles')
+    {{ HTML::style('assets/css/select2/select2.css') }}
     {{ HTML::style('assets/css/sa-datetimepicker/bootstrap-datetimepicker.min.css') }}
-    {{ HTML::style('assets/css/select2.css') }}
     {{ HTML::style('assets/css/custom/gallery-form.css') }}
 @stop
 

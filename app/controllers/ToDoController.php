@@ -34,8 +34,8 @@ class ToDoController extends BaseController {
     }
 
     public function create() {
-        $user = Sentry::getUser();
         $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+        $user = Sentry::getUser();
         return View::make('todo-form', compact('user', 'parents'));
     }
 

@@ -1,0 +1,45 @@
+#todo-form label {
+    color: #848484;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+#todo-form .form-group.todo-form {
+    padding: 10px;
+    background-color: #FFFFFF;
+}
+
+#todo-form .form-control {
+    background-color: #FFFFFF;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#todo-form .input-group-addon {
+    color: #FFFFFF;
+    background-color: #52C7D1;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#todo-form textarea {
+    resize: none;
+}
+
+#todo-form .btn {
+    min-width: 150px;
+}
+
+#todo-form .text-info {
+    margin-top: -15px;
+    margin-left: 10px;
+}
+
+.select2-container--default .select2-selection--multiple {
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+    border-color: #CCCCCC;
+}

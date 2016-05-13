@@ -28,13 +28,15 @@ class StudentsController extends BaseController {
     }
 
     public function index() {
+        $user = Sentry::getUser();
         $students = Student::get();
-        return View::make('students', compact('students'));
+        return View::make('students', compact('user', 'students'));
     }
 
     public function create() {
+        $user = Sentry::getUser();
         $blankArray = array('1' => 'SAMPLE');
-        return View::make('students-form', compact('blankArray'));
+        return View::make('students-form', compact('user', 'blankArray'));
     }
 
     public function store() {

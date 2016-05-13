@@ -12,8 +12,8 @@
 
         <!-- Bootstrap core CSS -->
         {{ HTML::style('assets/css/bootstrap/bootstrap.min.css') }}
-        {{ HTML::style('assets/css/font-awesome.min.css') }}
-        {{ HTML::style('assets/css/my.css') }}
+        {{ HTML::style('assets/css/font-awesome/font-awesome.min.css') }}
+        {{ HTML::style('assets/css/custom/my.css') }}
         {{ HTML::style('assets/css/custom/dashboard.css') }}
         {{ HTML::style('assets/css/custom/edutrax.css') }}
 
