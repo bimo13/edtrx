@@ -15,6 +15,10 @@ class User extends Model {
         return $this->hasMany('Timeline', 'user_id', 'id');
     }
 
+    public function classes() {
+        return $this->belongsTo('Classes', 'id', 'teacher_id');
+    }
+
     public function scopeGetAllData($query) {
         // $query->select(array(
         //     'id',

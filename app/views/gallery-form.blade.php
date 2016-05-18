@@ -70,7 +70,7 @@
                 {{ Form::label('images', 'Add Photos:') }}
                 <div class="form-group">
                     <div class="add-photos"><i class="fa fa-2x fa-cloud-upload"></i></div>
-                    {{ Form::file('images', array('class' => 'image-input')) }}
+                    {{ Form::file('images[]', array('class' => 'image-input')) }}
                     {{ $errors->first('images', '<div class="text-danger">:message</div>') }}
                 </div>
             </div>

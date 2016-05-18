@@ -56,6 +56,7 @@ class Student extends Model {
         $imagePath = $rawPath.$uniqid.'-'.$image->getClientOriginalName();
 
         // Handle inputs and process to database
+        $user = User::where('id', '=', Input::get('teacher_id'))->first();
         $this->student_no = Input::get('student_no');
         $this->first_name = Input::get('first_name');
         $this->last_name = Input::get('last_name');
@@ -66,7 +67,7 @@ class Student extends Model {
         $this->birth_date = Input::get('birth_date');
         $this->gender = Input::get('gender');
         $this->parent_id = Input::get('parent_id');
-        $this->class_id = Input::get('class_id');
+        $this->class_id = $user->classes->id;
         $this->photo = $imagePath;
 
         if($this->save()) {

@@ -39,7 +39,9 @@
                 </div>
                 <div class="col-sm-9 paddingless bg-ffffff relative">
                     <div class="col-sm-12 paddingless text-right btn-menu">
-                        <button class="btn roundless btn-edutrax-cyan"><i class="glyphicon glyphicon-pencil"></i></button>
+                        <a href="{{ URL::route('students.edit', array($student->id)) }}"" class="btn roundless btn-edutrax-cyan">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
                         <a class="btn roundless btn-danger" href="javascript:void(0);" data-toggle="modal" data-target="#modal-delete" data-id="{{ $student->id }}" data-title="student" data-preview="{{ ucwords(strtolower($student->first_name)) }} {{ ucwords(strtolower($student->last_name)) }}">
                             <i class="glyphicon glyphicon-trash"></i>
                         </a>

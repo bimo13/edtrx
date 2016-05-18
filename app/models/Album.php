@@ -19,6 +19,8 @@ class Album extends Model {
 
     public function scopeSaveNewAlbum($query,$params) {
 
+        // var_dump(count(Input::file('images'))); die();
+
         // $var = Input::get('share_to');
         // var_dump($var);
         // die();

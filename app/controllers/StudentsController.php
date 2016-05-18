@@ -35,8 +35,11 @@ class StudentsController extends BaseController {
 
     public function create() {
         $user = Sentry::getUser();
-        $blankArray = array('1' => 'SAMPLE');
-        return View::make('students-form', compact('user', 'blankArray'));
+        $blankArray = array('' => '');
+        $genders = array('' => '', 'male' => 'Male', 'female' => 'Female');
+        $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+        $parents = $blankArray + $parents;
+        return View::make('students-form', compact('user', 'blankArray', 'genders', 'parents'));
     }
 
     public function store() {
@@ -49,10 +52,14 @@ class StudentsController extends BaseController {
 
 
     public function edit($id) {
+        $user = Sentry::getUser();
         try {
             $model = Student::findOrFail($id);
-            $blankArray = array('1' => 'SAMPLE');
-            return View::make('students-form', compact('model','blankArray'));
+            $blankArray = array('' => '');
+            $genders = array('' => '', 'male' => 'Male', 'female' => 'Female');
+            $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+            $parents = $blankArray + $parents;
+            return View::make('students-form', compact('user', 'model', 'blankArray', 'genders', 'parents'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
