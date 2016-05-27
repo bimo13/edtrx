@@ -28,7 +28,7 @@
     </div>
     <div class="col-sm-12 marginless paddingless">
         @foreach($pinboards as $pinboard)
-            <div class="col-sm-3">
+            <div class="col-sm-3 mg-bottom-15px">
                 @if ($pinboard->file_type == "xlsx")
                     <img src="{{ asset('assets/img/icon-xlsx.png') }}" class="wd-full" />
                 @elseif ($pinboard->file_type == "xls")

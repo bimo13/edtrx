@@ -29,7 +29,8 @@ class AgendaController extends BaseController {
     public function create() {
         $user = Sentry::getUser();
         $blankArray = array('' => '');
-        return View::make('agenda-form', compact('user', 'blankArray'));
+        $buttonText = "Create Agenda";
+        return View::make('agenda-form', compact('user', 'blankArray', 'buttonText'));
     }
 
     public function store() {
@@ -49,7 +50,9 @@ class AgendaController extends BaseController {
                 DB::raw('DATE_FORMAT(time_end, \'%H:%i\') as time_end'),
                 'description'
             )->where('id', '=', $id)->first();
-            return View::make('agenda-form', compact('model'));
+            $user = Sentry::getUser();
+            $buttonText = "Update Agenda";
+            return View::make('agenda-form', compact('user', 'model', 'buttonText'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }

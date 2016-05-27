@@ -12,10 +12,16 @@
 @section('main-content')
     <div class="row">
         @if(isset($model))
-            {{ Form::model($model, array('id' => 'pinboard-form', 'method' => 'PUT', 'route' => array('pinboard.update', $model->id), 'autocomplete' => 'off')) }}
+            {{ Form::model($model, array('id' => 'pinboard-form', 'method' => 'PUT', 'files' => true, 'route' => array('pinboard.update', $model->id), 'autocomplete' => 'off')) }}
         @else
-            {{ Form::open(array('id' => 'pinboard-form', 'method' => 'POST', 'url' => 'pinboard', 'autocomplete' => 'off')) }}
+            {{ Form::open(array('id' => 'pinboard-form', 'method' => 'POST', 'files' => true, 'url' => 'pinboard', 'autocomplete' => 'off')) }}
         @endif
+                @if(isset($model))
+                    {{ Form::hidden('id', $model->id) }}
+                @endif
+
+                {{ Form::hidden('teacher_id', Sentry::getUser()->id) }}
+
                 <div class="col-sm-12">
                     {{ Form::label('name', 'Board Name:') }}
                     <div class="form-group pinboard-form">

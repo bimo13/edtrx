@@ -39,7 +39,9 @@ class StudentsController extends BaseController {
         $genders = array('' => '', 'male' => 'Male', 'female' => 'Female');
         $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
         $parents = $blankArray + $parents;
-        return View::make('students-form', compact('user', 'blankArray', 'genders', 'parents'));
+        $class_id = Classes::lists('class_name', 'id');
+        $class_id = $blankArray + $class_id;
+        return View::make('students-form', compact('user', 'blankArray', 'genders', 'parents', 'class_id'));
     }
 
     public function store() {
@@ -59,7 +61,9 @@ class StudentsController extends BaseController {
             $genders = array('' => '', 'male' => 'Male', 'female' => 'Female');
             $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
             $parents = $blankArray + $parents;
-            return View::make('students-form', compact('user', 'model', 'blankArray', 'genders', 'parents'));
+            $class_id = Classes::lists('class_name', 'id');
+            $class_id = $blankArray + $class_id;
+            return View::make('students-form', compact('user', 'model', 'blankArray', 'genders', 'parents', 'class_id'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }

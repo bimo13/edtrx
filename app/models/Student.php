@@ -21,7 +21,6 @@ class Student extends Model {
         $response = array();
         $input = $params['input'];
         $rules = $params['rules'];
-        $mobile = Input::get('mobile');
 
         $imgRule = array('photo' => 'required|image|mimes:png,gif,jpg,jpeg,bmp|max:20000');
         $rules = $rules + $imgRule;
@@ -32,15 +31,7 @@ class Student extends Model {
         
         $validating = Validator::make($input, $rules);
         if ($validating->fails()) {
-            if ($mobile == 'on') {
-                header('Content-Type: application/json');
-                $response['status'] = 0;
-                $response['message'] = $validating->messages();
-                echo json_encode($response);
-                die();
-            } else {
-                return Redirect::route('students.create')->withInput()->withErrors($validating);
-            }
+            return Redirect::route('students.create')->withInput()->withErrors($validating);
         }
 
         // Prevent "directory not exists" error
@@ -78,13 +69,7 @@ class Student extends Model {
             $response['message'] = "An error occured, cannot save to database.";
         }
 
-        if ($mobile == 'on') {
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            die();
-        } else {
-            return Redirect::route('students.index');
-        }
+        return Redirect::route('students.index');
 
     }
 
@@ -93,7 +78,6 @@ class Student extends Model {
         $response = array();
         $input = $params['input'];
         $rules = $params['rules'];
-        $mobile = Input::get('mobile');
 
         if (Input::hasFile('photo')) {
             $imgRule = array('photo' => 'image|mimes:png,gif,jpg,jpeg,bmp|max:20000');
@@ -102,15 +86,7 @@ class Student extends Model {
 
         $validating = Validator::make($input, $rules);
         if ($validating->fails()) {
-            if ($mobile == 'on') {
-                header('Content-Type: application/json');
-                $response['status'] = 0;
-                $response['message'] = $validating->messages();
-                echo json_encode($response);
-                die();
-            } else {
-                return Redirect::route('students.edit', array(Input::get('id')))->withInput()->withErrors($validating);
-            }
+            return Redirect::route('students.edit', array(Input::get('id')))->withInput()->withErrors($validating);
         }
 
         $update = $this->findOrFail(Input::get('id'));
@@ -133,6 +109,7 @@ class Student extends Model {
                 unlink(public_path($thumbPath));
             }
 
+            // Handle image upload with image-intervention.io
             $uniqid = uniqid();
             $imagePath = $uplPath.$uniqid.'-'.$image->getClientOriginalName();
             $thumbPath = $uplPath.'thumb-'.$uniqid.'-'.$image->getClientOriginalName();
@@ -157,7 +134,7 @@ class Student extends Model {
         $update->parent_id = Input::get('parent_id');
         $update->class_id = Input::get('class_id');
         
-        if($this->update()) {
+        if($update->update()) {
             $response['status'] = 1;
             $response['message'] = "Data updated successfully.";
         } else {
@@ -165,13 +142,7 @@ class Student extends Model {
             $response['message'] = "An error occured, cannot save to database.";
         }
 
-        if ($mobile == 'on') {
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            die();
-        } else {
-            return Redirect::route('students.index');
-        }
+        return Redirect::route('students.index');
 
     }
 

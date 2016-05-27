@@ -18,6 +18,19 @@
             {{ Form::open(array('id' => 'agenda-form', 'method' => 'POST', 'url' => 'agenda', 'autocomplete' => 'off')) }}
         @endif
 
+                @if(isset($model))
+                    {{ Form::hidden('id', $model->id) }}
+                @endif
+
+                {{ Form::hidden('teacher_id', Sentry::getUser()->id) }}
+                @if ($errors->has('teacher_id'))
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            {{ $errors->first('teacher_id', '<div class="text-danger">:message</div>') }}
+                        </div>
+                    </div>
+                @endif
+
                 <div class="col-sm-4">
                     {{ Form::label('date', 'Date:') }}
                     <div class="form-group agenda-form">
@@ -69,7 +82,7 @@
 
                 <div class="col-lg-12">
                     <div class="form-group text-right">
-                        {{ Form::submit('Create Agenda', array('class' => 'btn roundless btn-edutrax-cyan')) }}
+                        {{ Form::submit($buttonText, array('class' => 'btn roundless btn-edutrax-cyan')) }}
                         <a href="javascript:void(0);" class="btn roundless btn-edutrax-grey">Cancel</a>
                     </div>
                 </div>

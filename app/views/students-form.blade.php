@@ -12,11 +12,15 @@
 @section('main-content')
 
     @if(isset($model))
-        {{ Form::model($model, array('method' => 'PUT', 'id' => 'student-form', 'files' => true, 'route' => array('students.update', $model->id))) }}
+        {{ Form::model($model, array('method' => 'PUT', 'id' => 'student-form', 'files' => true, 'autocomplete' => 'off', 'route' => array('students.update', $model->id))) }}
             {{ Form::hidden('id', $model->id, ['id' => 'id']) }}
     @else
         {{ Form::open(array('method' => 'POST', 'id' => 'student-form', 'url' => 'students', 'files' => true, 'autocomplete' => 'off')) }}
     @endif
+
+            @if(isset($model))
+                {{ Form::hidden('id', $model->id, ['id' => 'id']) }}
+            @endif
 
             {{ Form::hidden('teacher_id', Sentry::getUser()->id) }}
             <div class="col-sm-4">
@@ -125,12 +129,20 @@
                 @endif
             @endif
 
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 {{ Form::label('photo', 'Student\'s Photo:') }}
                 <div class="form-group student-form">
                     {{ Form::file('photo', array('class' => 'filestyle', 'data-buttonText' => '&nbsp;&nbsp;Browse', 'data-buttonName' => 'btn-edutrax-cyan')) }}
                 </div>
                 {{ $errors->first('photo', '<div class="text-danger flash-error">:message</div>') }}
+            </div>
+
+            <div class="col-sm-6">
+                {{ Form::label('class_id', 'Class Name/ID:') }}
+                <div class="form-group student-form">
+                    {{ Form::select('class_id', $class_id, null, ['class' => 'form-control']) }}
+                </div>
+                {{ $errors->first('class_id', '<div class="text-danger">:message</div>') }}
             </div>
 
             <div class="col-lg-12">
