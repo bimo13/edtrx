@@ -77,6 +77,19 @@ class ApiController extends BaseController {
             foreach ($timelines as $timeline) {
                 $publicity = explode(',',$timeline->publicity);
                 if ($publicity[0] == "public" || in_array($parent_id, $publicity)) {
+                    if ($timeline->category == "todo")
+                        $getPosts = Todo::findOrFail($timeline->post_id);
+                    else if ($timeline->category == "agenda")
+                        $getPosts = Agenda::findOrFail($timeline->post_id);
+                    else if ($timeline->category == "pinboard")
+                        $getPosts = Pinboard::findOrFail($timeline->post_id);
+                    else if ($timeline->category == "gallery") {
+                        $getPosts = Album::findOrFail($timeline->post_id);
+                        $getGallery = Gallery::where('album_id', '=', $timeline->post_id)->get();
+                        $getPosts['galleries'] = $getGallery;
+                    }
+
+                    $timeline['postData'] = $getPosts;
                     array_push($returnData, $timeline);
                 }
             }
