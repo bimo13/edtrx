@@ -78,8 +78,8 @@ class ApiController extends BaseController {
                 $publicity = explode(',',$timeline->publicity);
                 if ($publicity[0] == "public" || in_array($parent_id, $publicity)) {
                     if ($timeline->category == "todo") {
-                        $getPosts = Todo::findOrFail($timeline->post_id);
-                        $countPosts = Todo::where('id', '=', $timeline->post_id)->count();
+                        $getPosts = ToDo::findOrFail($timeline->post_id);
+                        $countPosts = ToDo::where('id', '=', $timeline->post_id)->count();
                     } else if ($timeline->category == "agenda") {
                         $getPosts = Agenda::findOrFail($timeline->post_id);
                         $countPosts = Agenda::where('id', '=', $timeline->post_id)->count();
