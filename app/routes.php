@@ -85,7 +85,7 @@ Route::get('/api/getAgenda/{parent_id}/{date}', 'ApiController@getAgenda');
 Route::get('/api/getPinboard/{parent_id}', 'ApiController@getPinboard');
 Route::get('/api/getPinboardDetail/{pinboard_id}', 'ApiController@getPinboardDetail');
 Route::get('/api/getToDoDates/{parent_id}', 'ApiController@getToDoDates');
-Route::get('/api/getToDo/{parent_id}/{date}', 'ApiController@getToDo');
+Route::get('/api/getToDo/{parent_id}', 'ApiController@getToDo');
 Route::get('/api/getToDoDetail/{todo_id}', 'ApiController@getToDoDetail');
 
 

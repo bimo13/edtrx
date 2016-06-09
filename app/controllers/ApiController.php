@@ -278,12 +278,11 @@ class ApiController extends BaseController {
         }
     }
 
-    public function getToDo($parent_id = NULL, $date = NULL) {
+    public function getToDo($parent_id = NULL) {
         try {
             $parent = StudentParent::findOrFail($parent_id);
             $teacher_id = $parent->Students[0]->Classes->teacher_id;
             $todo = ToDo::where('teacher_id', '=', $teacher_id)
-                                ->where('date', '=', $date)
                                 ->orderBy('name')
                                 ->get();
 
