@@ -19,6 +19,10 @@ class User extends Model {
         return $this->belongsTo('Classes', 'id', 'teacher_id');
     }
 
+    public function pinboard() {
+        return $this->hasMany('Pinboard', 'teacher_id', 'id');
+    }
+
     public function scopeGetAllData($query) {
         // $query->select(array(
         //     'id',

@@ -44,8 +44,9 @@ class PinboardController extends BaseController {
 
     public function show($id) {
         try {
+            $user = Sentry::getUser();
             $pinboard = Pinboard::findOrFail($id);
-            return View::make('pinboard-detail', compact('pinboard'));
+            return View::make('pinboard-detail', compact('user', 'pinboard'));
         } catch (ModelNotFoundException $e) {
             return Redirect::to('/pinboard/')->withErrors(array('msg' => 'Failed to parse pinboard data, please try again.'));
         }

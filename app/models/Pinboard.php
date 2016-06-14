@@ -9,6 +9,10 @@ class Pinboard extends Model {
 
     protected $table = 'pinboard';
 
+    public function User() {
+        return $this->belongsTo('User', 'teacher_id', 'id');
+    }
+
     public function scopeSaveNewPinboard($query,$params) {
 
         Input::merge(array_map('trim', Input::except('file','share_to')));

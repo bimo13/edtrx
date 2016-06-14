@@ -25,6 +25,11 @@
     text-overflow: ellipsis;
 }
 
+.pinboard-name a {
+    color: #000000;
+    text-decoration: none;
+}
+
 .pinboard-date {
     padding: 0 5px 5px !important;
 

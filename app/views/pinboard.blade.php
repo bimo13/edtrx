@@ -45,7 +45,7 @@
                     <img src="{{ asset('assets/img/icon-pdf.png') }}" class="wd-full" />
                 @endif
                 <div class="col-sm-12 marginless paddingless pinboard-name">
-                    {{ $pinboard->name }}
+                    <a href="{{ URL::to('/pinboard/'.$pinboard->id) }}">{{ $pinboard->name }}</a>
                 </div>
                 <div class="col-sm-12 marginless paddingless pinboard-date">
                     {{ date("d F, Y", strtotime($pinboard->created_at)) }}
