@@ -97,7 +97,16 @@ class ApiController extends BaseController {
                             $getPosts['galleries'] = $getGallery;
                         }
 
+                        $teacherData = Sentry::findUserById($teacher_id);
+                        $teacherDetail = UserDetail::where('user_id', '=', $teacher_id)->first();
+
                         $timeline['postData'] = $getPosts;
+                        $timeline['teacherData'] = array(
+                            'teacher_id' => $teacher_id,
+                            'first_name' => $teacherData->first_name,
+                            'last_name' => $teacherData->last_name,
+                            'photo' => $teacherDetail->photo
+                        );
                         array_push($returnData, $timeline);
                     }
                 }
