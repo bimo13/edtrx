@@ -192,12 +192,13 @@ class ApiController extends BaseController {
 
     }
 
-    public function getAgenda($parent_id = NULL, $date = NULL) {
+    public function getAgenda($parent_id = NULL, $year = NULL, $month = NULL) {
         try {
             $parent = StudentParent::findOrFail($parent_id);
             $teacher_id = $parent->Students[0]->Classes->teacher_id;
             $agenda = Agenda::where('teacher_id', '=', $teacher_id)
-                                ->where('date', '=', $date)
+                                ->whereYear('date', '=', $year)
+                                ->whereMonth('date', '=', $month)
                                 ->orderBy('time_start', 'asc')
                                 ->get();
 
