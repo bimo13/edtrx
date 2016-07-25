@@ -88,7 +88,7 @@ class StudentsController extends BaseController {
         $datatable = DatatablesCustom::of($students);
         $datatable->remove_column('id');
         $datatable->edit_column('action', function($obj) {
-            $ret = '<a href="javascript:void(0);">View Detail</a>';
+            $ret = '<a href="' . URL::to("/attendance/student/".$obj->id) . '">View Detail</a>';
             return $ret;
         });
         return $datatable->out();

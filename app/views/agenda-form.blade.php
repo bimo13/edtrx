@@ -5,7 +5,7 @@
 @stop
 
 @section('styles')
-    {{ HTML::style('assets/css/sa-datetimepicker/bootstrap-datetimepicker.min.css') }}
+    {{ HTML::style('assets/css/sa-datetimepicker/bootstrap-datetimepicker.css') }}
     {{ HTML::style('assets/css/custom/agenda-form.css') }}
 @stop
 

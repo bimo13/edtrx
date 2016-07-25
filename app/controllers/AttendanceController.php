@@ -26,8 +26,14 @@ class AttendanceController extends BaseController {
         return Attendance::saveNewAttendance(array('input' => Input::all(), 'rules' => $this->rulesList(), 'messages' => $this->messagesList()));
     }
 
-    public function showStudent($student_id) {
-        return View::make('attendance-student-detail');
+    public function showStudent($student_id, $date = NULL) {
+        try {
+            $student = Student::findOrFail($id);
+            $attendances = Attendance::where('student_id', '=', $student_id);
+            return View::make('attendance-student-detail');
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound();
+        }
     }
 
     public function edit($id) {

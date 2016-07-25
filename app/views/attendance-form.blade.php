@@ -51,7 +51,7 @@
                     </tr>
 
                     @foreach($students as $index => $student)
-
+                        {{ Form::hidden('student_id['.$index.']', $student->id) }}
                         <tr>
                             <td class="student-information">
                                 <img src="{{ asset($student->photo) }}" />

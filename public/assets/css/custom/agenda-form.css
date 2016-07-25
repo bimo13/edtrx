@@ -28,6 +28,6 @@
     resize: none;
 }
 
-#agenda-form .btn {
+#agenda-form .btn.roundless {
     min-width: 150px;
 }
