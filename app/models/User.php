@@ -70,6 +70,9 @@ class User extends Model {
 
         // Handle inputs and process to database
         // Main users table
+        $usnm = Input::get('email');
+        $pswd = Input::get('password');
+        $full_name = Input::get('first_name') . " " . Input::get('last_name');
         Sentry::getUserProvider()->create(array(
             'email'       => Input::get('email'),
             'password'    => Input::get('password'),
@@ -99,7 +102,17 @@ class User extends Model {
         $userDetail->birth_date = Input::get('birth_date');
         $userDetail->gender = Input::get('gender');
         $userDetail->photo = $imagePath;
-        $userDetail->save();
+
+        if($this->save()) {
+            Session::flash('message', 'A new user has been created successfully.'); 
+            Session::flash('alert-class', 'success');
+            Session::flash('usnm', $usnm);
+            Session::flash('pswd', $pswd);
+            Session::flash('fullname', $full_name);
+        } else {
+            Session::flash('message', 'An error occured, cannot save to database. Please try again.'); 
+            Session::flash('alert-class', 'danger');
+        }
 
         return Redirect::route('users.index');
 

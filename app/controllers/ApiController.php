@@ -332,4 +332,76 @@ class ApiController extends BaseController {
         }
     }
 
+    public function parentRegistration() {
+
+        $response = array();
+
+        $response = array();
+        $input = Input::all();
+        $rules = array(
+            'first_name'  => 'required|max:255',
+            'last_name'   => 'required|max:255',
+            'address'     => 'required|max:255',
+            'phone_1'     => 'required|max:255',
+            'email'       => 'required|email|max:255',
+            'password'    => 'required|min:8|max:255'
+        );
+
+        $imgRule = array('photo' => 'required|image|mimes:png,gif,jpg,jpeg,bmp|max:20000');
+        $rules = $rules + $imgRule;
+
+        $image = Input::file('photo');
+        $rawPath = 'assets/uploads/parents/';
+        $uplPath = public_path($rawPath);
+        
+        $validating = Validator::make($input, $rules);
+        if ($validating->fails()) {
+            $response['status'] = 0;
+            $response['message'] = $validating->messages();
+            return $response;
+        }
+
+        // Prevent "directory not exists" error
+        if(!\File::exists($uplPath))
+            \File::makeDirectory($uplPath, $mode=0755, $recursive=false);
+
+        // Handle image upload with image-intervention.io
+        $uniqid = uniqid();
+        $imagePath = $uplPath.$uniqid.'-'.$image->getClientOriginalName();
+        $thumbPath = $uplPath.'thumb-'.$uniqid.'-'.$image->getClientOriginalName();
+        Image::make($image)->save($imagePath);
+        Image::make($image)->resize(200, 200)->save($thumbPath);
+        $imagePath = $rawPath.$uniqid.'-'.$image->getClientOriginalName();
+
+        $usnm = Input::get('email');
+        $pswd = Input::get('password');
+        $full_name = Input::get('first_name') . " " . Input::get('last_name');
+
+        // Handle inputs and process to database
+        $StudentParent = new StudentParent;
+        $StudentParent->first_name = Input::get('first_name');
+        $StudentParent->last_name = Input::get('last_name');
+        $StudentParent->address = Input::get('address');
+        $StudentParent->phone_1 = Input::get('phone_1');
+        $StudentParent->phone_2 = Input::get('phone_2');
+        $StudentParent->photo = $imagePath;
+        $StudentParent->email = $usnm;
+        $StudentParent->password = Hash::make($pswd);
+
+        if($StudentParent->save()) {
+            $response['status'] = 1;
+            $response['message'] = "Data saved successfully.";
+            $response['mail'] = $usnm;
+            $response['pswd'] = $pswd;
+            $response['tags'] = "Parent";
+            $response['website'] = $imagePath;
+        } else {
+            $response['status'] = 0;
+            $response['message'] = "An error occured, cannot save to database. Please try again.";
+        }
+
+        return $response;
+
+    }
+
 }

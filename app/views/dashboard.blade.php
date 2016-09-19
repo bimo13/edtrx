@@ -108,7 +108,10 @@
                     </li>
                     @endif
                     <li>
-                        <a href="{{ URL::to('/account') }}"><i class="fa fa-user"></i>ACCOUNT</a>
+                        <a href="{{ URL::to('/chat') }}"><i class="fa fa-comments-o"></i>CHAT</a>
+                    </li>
+                    <li>
+                        <a href="{{ URL::to('/account') }}"><img src="{{ asset('assets/img/user.png') }}" alt="..." class="img-circle" style="width: 40px;height: auto">ACCOUNT</a>
                     </li>
                     </ul>
                     <div class="clear"></div>

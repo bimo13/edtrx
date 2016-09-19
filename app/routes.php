@@ -66,8 +66,21 @@ Route::group(['before' => 'hasAccess:admin,admin.timeline'], function() {
     Route::resource('timeline', 'TimelineController');
 });
 
+Route::get('/chat', 'ChatController@index');
 Route::get('/account', 'MainController@account');
 Route::get('/help', 'MainController@help');
+
+/*
+|--------------------------------------------------------------------------
+| Parent Registration Routes
+|--------------------------------------------------------------------------
+|
+| Routes listed below are routes that will be accessed by parents to
+| register accounts on EduTrax.
+|
+*/
+
+Route::resource('/parents', 'ParentsController');
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +92,7 @@ Route::get('/help', 'MainController@help');
 */
 
 Route::post('/api/login', 'ApiController@login');
+Route::post('/api/parentRegistration', 'ApiController@parentRegistration');
 Route::get('/api/getTimeline/{parent_id}', 'ApiController@getTimeline');
 Route::get('/api/getAlbum/{parent_id}', 'ApiController@getAlbum');
 Route::get('/api/getGalleryAlbum/{album_id}', 'ApiController@getGalleryAlbum');

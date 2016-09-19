@@ -34,7 +34,7 @@
         <div class="navbar-fixed-bottom">
             <div class="col-md-3 login-footer">
                 <a href="javascript:void(0);">Forgot Password?</a>
-                <a href="javascript:void(0);">Don't have account? <span>Get Started</span></a>
+                <a href="{{ URL::route('parents.create') }}"><span>Parents Registration Form</span></a>
             </div>
         </div>
         {{ HTML::script('assets/js/jquery.js') }}
