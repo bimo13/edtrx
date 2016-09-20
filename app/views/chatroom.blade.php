@@ -4,8 +4,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Edutrax</title>
-        {{ HTML::style('assets/css/bootstrap.css') }}
-        {{ HTML::style('assets/css/font-awesome.min.css') }}
+        {{ HTML::style('assets/css/bootstrap/bootstrap.min.css') }}
+        {{ HTML::style('assets/css/font-awesome/font-awesome.min.css') }}
         {{ HTML::style('assets/qblox/libs/stickerpipe/css/stickerpipe.min.css') }}
         {{ HTML::style('assets/qblox/css/style.css') }}
         @yield('styles')
