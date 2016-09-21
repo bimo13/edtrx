@@ -340,7 +340,6 @@ class ApiController extends BaseController {
         $input = Input::all();
         $rules = array(
             'first_name'  => 'required|max:255',
-            'last_name'   => 'required|max:255',
             'email'       => 'required|email|max:255',
             'password'    => 'required|min:8|max:255'
         );
