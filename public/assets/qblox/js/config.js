@@ -29,8 +29,8 @@ var config = {
 };
 
 var QBUser1 = {
-        id: 17763700,
-        name: 'Mochamad Panji Aryo Bimo',
+        // id: 17763700,
+        // name: 'Mochamad Panji Aryo Bimo',
         login: 'bimo13',
         pass: 'Bimo321+'
     };

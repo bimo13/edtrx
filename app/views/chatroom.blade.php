@@ -8,18 +8,23 @@
         {{ HTML::style('assets/css/font-awesome/font-awesome.min.css') }}
         {{ HTML::style('assets/qblox/libs/stickerpipe/css/stickerpipe.min.css') }}
         {{ HTML::style('assets/qblox/css/style.css') }}
+        {{ HTML::style('assets/css/custom/my.css') }}
+        {{ HTML::style('assets/css/custom/dashboard.css') }}
+        {{ HTML::style('assets/css/custom/edutrax.css') }}
         @yield('styles')
     </head>
     <body>
 
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
-                        <span class="glyphicon glyphicon-cog"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
-                    <a href="https://quickblox.com/developers/Chat"><img src="{{ asset('assets/qblox/images/logo-quickblox.png') }}" id="logo"></a>
+                    <a class="navbar-brand" href="{{ URL::to('/dashboard') }}">EDU<b>TRAX</b></a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
@@ -27,11 +32,12 @@
                         <li><a href="#" onclick="showNewDialogPopup()">Create dialog</a></li>
                         <li><a href="#" onclick="showDialogInfoPopup()">Dialog info</a></li>
                     </ul>
-                    <a href="https://github.com/QuickBlox/quickblox-javascript-sdk/tree/gh-pages/samples/chat"
-                    style="position:absolute;top:20px;right:12%;font-size:0.85em;color:grey;">View source on GitHub</a>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ URL::to('/logout') }}"><i class="glyphicon glyphicon-off"></i></a></li>
+                    </ul>
                 </div><!--/.nav-collapse -->
             </div>
-        </div>
+        </nav>
 
         <!-- Main block -->
         <div class="container">
@@ -56,7 +62,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div><img src="images/ajax-loader.gif" class="load-msg"></div>
+                                <div><img src="{{ asset('assets/qblox/images/ajax-loader.gif') }}" class="load-msg"></div>
                                 <form class="form-inline" role="form" method="POST" action="" onsubmit="return submit_handler(this)">
                                     <div class="input-group">
                                         <span class="input-group-btn input-group-btn_change_load">
@@ -79,7 +85,7 @@
                                             <button  type="submit" id="send_btn" class="btn btn-default" onclick="clickSendMessage()">Send</button>
                                         </span>
                                     </div>
-                                    <img src="images/ajax-loader.gif" id="progress">
+                                    <img src="{{ asset('assets/qblox/images/ajax-loader.gif') }}" id="progress">
                                 </form>
                             </div>
                         </div>
@@ -119,7 +125,7 @@
                         <div class="list-group pre-scrollable for-scroll">
                             <div id="users_list" class="clearfix"></div>
                         </div>
-                        <div class="img-place"><img src="images/ajax-loader.gif" id="load-users"></div>
+                        <div class="img-place"><img src="{{ asset('assets/qblox/images/ajax-loader.gif') }}" id="load-users"></div>
                         <input type="text" class="form-control" id="dlg_name" placeholder="Enter dialog name">
                         <button id="add-dialog" type="button" value="Confirm" id="" class="btn btn-success btn-lg btn-block" onclick="createNewDialog()">Create dialog</button>
                         <div class="progress">
@@ -159,6 +165,13 @@
         </div>
 
         <?php $user = Sentry::getUser(); ?>
+
+        <script type="text/javascript">
+            var QBLoginEdtrx = {
+                login: '{{ Session::get("email"); }}',
+                pass: '{{ Session::get("password"); }}'
+            };
+        </script>
 
         {{ HTML::script('assets/js/jquery.js') }}
         {{ HTML::script('assets/js/bootstrap.min.js') }}

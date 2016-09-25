@@ -35,11 +35,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">EDU<b>TRAX</b></a>
+                    <a class="navbar-brand" href="{{ URL::to('/dashboard') }}">EDU<b>TRAX</b></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><i class="glyphicon glyphicon-off"></i></a></li>
+                        <li><a href="{{ URL::to('/logout') }}"><i class="glyphicon glyphicon-off"></i></a></li>
                     </ul>
                 </div>
             </div>

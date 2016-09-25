@@ -3,23 +3,8 @@
 var currentUser;
 
 $(document).ready(function() {
-
-  $("#loginForm").modal("show");
-  $('#loginForm .progress').hide();
-
-  // User1 login action
-  //
-  $('#user1').click(function() {
-    currentUser = QBUser1;
-    connectToChat(QBUser1);
-  });
-
-  // User2 login action
-  //
-  $('#user2').click(function() {
-    currentUser = QBUser2;
-    connectToChat(QBUser2);
-  });
+  currentUser = QBLoginEdtrx;
+  connectToChat(QBLoginEdtrx);
 });
 
 function connectToChat(user) {
@@ -86,7 +71,7 @@ function onReconnectListener(){
 // niceScroll() - ON
 $(document).ready(
     function() {
-        $("html").niceScroll({cursorcolor:"#02B923", cursorwidth:"7", zindex:"99999"});
-        $(".nice-scroll").niceScroll({cursorcolor:"#02B923", cursorwidth:"7", zindex:"99999"});
+        $("html").niceScroll({cursorcolor:"#53C7D1", cursorwidth:"5", zindex:"99999"});
+        $(".nice-scroll").niceScroll({cursorcolor:"#53C7D1", cursorwidth:"5", zindex:"99999"});
     }
 );

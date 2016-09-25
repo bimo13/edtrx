@@ -10,6 +10,8 @@ class AuthController extends BaseController {
             );
 
             $user = Sentry::authenticate($credentials, false);
+            Session::put('email',Input::get('email'));
+            Session::put('password',Input::get('password'));
             return Redirect::to('/dashboard');
         } catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
             return Redirect::to('/')->withErrors(array(Lang::get('Login field is required.')));
@@ -26,6 +28,8 @@ class AuthController extends BaseController {
 
     public function logout() {
         Sentry::logout();
+        Session::forget('email');
+        Session::forget('password');
         return Redirect::to('/');
     }
 

@@ -123,8 +123,8 @@ function showOrUpdateDialogInUI(itemRes, updateHtml) {
 
 // add photo to dialogs
 function getDialogIcon (dialogType) {
-  var groupPhoto = '<img src="images/ava-group.svg" width="30" height="30" class="round">';
-  var privatPhoto  = '<img src="images/ava-single.svg" width="30" height="30" class="round">';
+  var groupPhoto = '<img src="assets/qblox/images/ava-group.svg" width="30" height="30" class="round">';
+  var privatPhoto  = '<img src="assets/qblox/images/ava-single.svg" width="30" height="30" class="round">';
   var defaultPhoto = '<span class="glyphicon glyphicon-eye-close"></span>';
 
   var dialogIcon;
