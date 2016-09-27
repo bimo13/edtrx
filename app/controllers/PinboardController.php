@@ -64,7 +64,7 @@ class PinboardController extends BaseController {
 
 
     public function destroy($id) {
-        //
+        return Pinboard::deletePinboard(array('id' => $id));
     }
 
 /*

@@ -104,4 +104,22 @@ class Pinboard extends Model {
 
     }
 
+    public function scopeDeletePinboard($query,$params) {
+
+        $response = array();
+        $response['status'] = 0;
+        $response['message'] = "An error occured, please try again.";
+
+        $delTimeline = Timeline::where('category', '=', 'pinboard')
+                    ->where('post_id', '=', $params['id'])
+                    ->delete();
+        if($delTimeline && $this->destroy($params['id'])) {
+            $response['status'] = 1;
+            $response['message'] = "Data has been deleted successfully.";
+        }
+
+        return Redirect::route('pinboard.index');
+
+    }
+
 }

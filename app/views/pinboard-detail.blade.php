@@ -66,9 +66,20 @@
                 <td></td>
                 <td colspan="3">
                     <a href="{{ url($pinboard->file_path) }}" class="btn btn-orange roundless" target="_blank" download="{{ $pinboard->name }}">Download</a>
+                    @if ($pinboard->teacher_id == $user->id)
+                        <a  class="btn btn-danger roundless" href="javascript:void(0);" data-toggle="modal" data-target="#modal-delete" data-id="{{ $pinboard->id }}" data-title="pinboard" data-preview="{{ $pinboard->name }}">Delete</a>
+                    @endif
                 </td>
             </tr>
         </table>
     </div>
 
+@stop
+
+@section('scripts')
+    <script type="text/javascript">
+        var base_url = "{{ url() }}";
+        var teacher_id = "{{ Sentry::getUser()->id }}";
+    </script>
+    {{ HTML::script('assets/js/custom/pinboard.js') }}
 @stop

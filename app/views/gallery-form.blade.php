@@ -18,6 +18,9 @@
         {{ Form::open(array('method' => 'POST', 'id' => 'gallery-form', 'route' => array('album.store'), 'files' => 'true', 'autocomplete' => 'off')) }}
     @endif
 
+            @if(isset($model))
+                {{ Form::hidden('id', $model->id, ['id' => 'id']) }}
+            @endif
 
             {{ Form::hidden('teacher_id', Sentry::getUser()->id) }}
             <div class="col-sm-12">
@@ -67,7 +70,11 @@
             </div>
 
             <div class="col-sm-12">
-                {{ Form::label('images', 'Add Photos:') }}
+                @if(isset($model))
+                    {{ Form::label('images', 'Add More Photos:') }}
+                @else
+                    {{ Form::label('images', 'Add Photos:') }}
+                @endif
                 <div class="form-group">
                     <div class="add-photos"><i class="fa fa-2x fa-cloud-upload"></i></div>
                     {{ Form::file('images[]', array('class' => 'image-input')) }}
@@ -77,7 +84,11 @@
 
             <div class="col-lg-12 mg-top-35px">
                 <div class="form-group text-right">
-                    {{ Form::submit('Create Album', array('class' => 'btn roundless btn-edutrax-cyan')) }}
+                    @if(isset($model))
+                        {{ Form::submit('Save Changes', array('class' => 'btn roundless btn-edutrax-cyan')) }}
+                    @else
+                        {{ Form::submit('Create Album', array('class' => 'btn roundless btn-edutrax-cyan')) }}
+                    @endif
                     <a href="javascript:void(0);" class="btn roundless btn-edutrax-grey">Cancel</a>
                 </div>
             </div>

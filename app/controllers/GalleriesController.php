@@ -33,7 +33,15 @@ class GalleriesController extends BaseController {
     }
 
     public function edit($id) {
-        //
+        $user = Sentry::getUser();
+        try {
+            $model = Album::findOrFail($id);
+            $blankArray = array('' => '');
+            $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+            return View::make('gallery-form', compact('user', 'model', 'blankArray', 'parents'));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound();
+        }
     }
 
     public function update($id) {
@@ -41,7 +49,7 @@ class GalleriesController extends BaseController {
     }
 
     public function destroy($id) {
-        //
+        return Gallery::deleteGallery(array('id' => $id));
     }
 
 /*
