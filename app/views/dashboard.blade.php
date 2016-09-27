@@ -71,7 +71,7 @@
                     @endif
                     @if($user->hasAnyAccess(array('admin.grade')))
                     <li>
-                        <a href="#"><i class="fa fa-font"></i>GRADE</a>
+                        <a href="javascript:void(0);"><i class="fa fa-font"></i>GRADE</a>
                     </li>
                     @endif
                     @if($user->hasAnyAccess(array('admin.student')))
@@ -100,7 +100,7 @@
                     </li>
                     @endif
                     <li>
-                        <a href="{{ URL::to('/help') }}"><i class="fa fa-question-circle"></i>HELP</a>
+                        <a href="javascript:void(0);"><i class="fa fa-question-circle"></i>HELP</a>
                     </li>
                     @if($user->hasAnyAccess(array('admin.users')))
                     <li>
