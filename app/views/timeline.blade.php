@@ -17,7 +17,7 @@
             <div class="date">{{ strtoupper(date('D', strtotime($timelineDate->day))) }}, {{ date('d M', strtotime($timelineDate->day)) }}</div>
         </div>
 
-        <?php $timelines = Timeline::whereDate('created_at', '=', $timelineDate->day)->get(); ?>
+        <?php $timelines = Timeline::whereDate('created_at', '=', $timelineDate->day)->orderBy('created_at', 'desc')->get(); ?>
         @foreach($timelines as $timeline)
 
             @if ($timeline->category == "agenda")

@@ -11,7 +11,7 @@
 
 @section('main-content')
     <div class="col-sm-4">
-        {{ Form::open(array('id' => 'todo-search-form', 'method' => 'POST', 'url' => 'pinboard.search', 'autocomplete' => 'off')) }}
+        {{ Form::open(array('id' => 'todo-search-form', 'class' => 'hidden', 'method' => 'POST', 'url' => 'pinboard.search', 'autocomplete' => 'off')) }}
             <div class="form-group todo-form">
                 <div class='input-group date' id='todoSearchDate'>
                     {{ Form::text('date', null, array('class' => 'form-control', 'readonly')) }}

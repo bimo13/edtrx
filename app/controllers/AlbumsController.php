@@ -6,7 +6,6 @@ class AlbumsController extends BaseController {
         return $rules = array(
             'name'       => 'required|max:255',
             'date_taken' => 'date',
-            'images'     => 'required',
             'share_to'   => 'arrayofint',
         );
     }
@@ -45,11 +44,11 @@ class AlbumsController extends BaseController {
     }
 
     public function update($id) {
-        //
+        return Album::updateAlbum(array('input' => Input::all(), 'rules' => $this->rulesList(), 'messages' => $this->messagesList()));
     }
 
     public function destroy($id) {
-        //
+        return Album::deleteAlbum(array('id' => $id));
     }
 
 /*
