@@ -23,3 +23,7 @@
     border-color    : #ABB4AF !important;
     background-color: #FFFFFF !important;
 }
+
+.navbar-fixed-top{
+    z-index: 1000 !important;
+}

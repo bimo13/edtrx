@@ -79,6 +79,28 @@ class StudentsController extends BaseController {
         return Student::deleteStudent(array('id' => $id));
     }
 
+    public function search() {
+        $user = Sentry::getUser();
+        $keyword = Input::get('student-search');
+        if ($keyword != NULL && $keyword != "") {
+            $students = Student::where('first_name', 'LIKE', '%'.$keyword.'%')
+                                    ->orWhere('last_name', 'LIKE', '%'.$keyword.'%')
+                                    ->orWhere('student_no', 'LIKE', '%'.$keyword.'%');
+            if ($students->count() > 0) {
+                $students = $students->get();
+                return View::make('students', compact('user', 'students'));
+            } else {
+                Session::flash('message', 'No data has been found. Please try another keyword.'); 
+                Session::flash('alert-class', 'danger');
+                return Redirect::to('/students');
+            }
+        } else {
+            Session::flash('message', 'Keyword cannot be empty. Please try again.'); 
+            Session::flash('alert-class', 'danger');
+            return Redirect::to('/students');
+        }
+    }
+
     // END OF RESTful ROUTING
     // BEGIN DATA-TRANSACTION ROUTING (AJAX NECESSITIES)
     public function getMyStudents() {
@@ -91,7 +113,7 @@ class StudentsController extends BaseController {
             $ret = '<a href="' . URL::to("/attendance/student/".$obj->id) . '">View Detail</a>';
             return $ret;
         });
-        return $datatable->out();
+        return $datatable->make();
     }
 
 }

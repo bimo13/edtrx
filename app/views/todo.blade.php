@@ -44,7 +44,10 @@
                     <tr>
                         <td class="col-sm-3">{{ $todo->name }}</td>
                         <td class="col-sm-7">{{ $todo->description }}</td>
-                        <td class="col-sm-2"><a href="javascript:void(0);" class="btn btn-todo-edit pull-right btn-edutrax-cyan roundless">Edit</td>
+                        <td class="col-sm-2 text-right">
+                            <a href="{{ URL::route('todo.edit', array($todo->id)) }}" class="btn btn-edutrax-cyan roundless"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a href="javascript:void(0);" class="btn roundless btn-danger" data-toggle="modal" data-target="#modal-delete" data-id="{{ $todo->id }}" data-title="todo" data-preview="{{ ucwords(strtolower($todo->name)) }}"><i class="glyphicon glyphicon-trash"></i></a>
+                        </td>
                     </tr>
                 @endforeach
             </table>
@@ -53,10 +56,15 @@
 @stop
 
 @section('scripts')
+    <script type="text/javascript">
+        var base_url = "{{ url() }}";
+        var teacher_id = "{{ Sentry::getUser()->id }}";
+    </script>
     {{ HTML::script('assets/js/sa-datetimepicker/moment.js') }}
     {{ HTML::script('assets/js/sa-datetimepicker/transition.js') }}
     {{ HTML::script('assets/js/sa-datetimepicker/collapse.js') }}
     {{ HTML::script('assets/js/sa-datetimepicker/bootstrap-datetimepicker.min.js') }}
+    {{ HTML::script('assets/js/custom/todo.js') }}
     <script type="text/javascript">
         $(function () {
             $('#todoSearchDate').datetimepicker({

@@ -11,7 +11,7 @@
 @section('main-content')
 
     <div class="col-sm-8">
-        {{ Form::open(array('id' => 'student-search-form', 'method' => 'POST', 'url' => 'student.search', 'autocomplete' => 'off')) }}
+        {{ Form::open(array('id' => 'student-search-form', 'method' => 'POST', 'url' => 'students/search', 'autocomplete' => 'off')) }}
             <div class="form-group student-search-form">
                 <div class="input-group">
                     {{ Form::text('student-search', null, array('class' => 'form-control roundless', 'placeholder' => 'Search Student')) }}
@@ -31,6 +31,14 @@
 
     <div class="clear"></div>
 
+    @if(Session::has('message'))
+        <div class="col-sm-12 bg-{{ Session::get('alert-class', 'alert-info') }} pd-all-15px mg-bottom-10px">
+            <p class="text-{{ Session::get('alert-class', 'alert-info') }} marginless">{{ Session::get('message') }}</p>
+        </div>
+    @endif
+
+    <div class="clear"></div>
+
     @foreach($students as $student)
         <div class="col-sm-4 mg-bottom-15px">
             <div class="col-sm-12 marginless pd-top-20px pd-bottom-20px bg-ffffff">
@@ -39,7 +47,7 @@
                 </div>
                 <div class="col-sm-9 paddingless bg-ffffff relative">
                     <div class="col-sm-12 paddingless text-right btn-menu">
-                        <a href="{{ URL::route('students.edit', array($student->id)) }}"" class="btn roundless btn-edutrax-cyan">
+                        <a href="{{ URL::route('students.edit', array($student->id)) }}" class="btn roundless btn-edutrax-cyan">
                             <i class="glyphicon glyphicon-pencil"></i>
                         </a>
                         <a class="btn roundless btn-danger" href="javascript:void(0);" data-toggle="modal" data-target="#modal-delete" data-id="{{ $student->id }}" data-title="student" data-preview="{{ ucwords(strtolower($student->first_name)) }} {{ ucwords(strtolower($student->last_name)) }}">

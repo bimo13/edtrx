@@ -23,7 +23,7 @@
             @if ($timeline->category == "agenda")
                 <?php
                     $timelineDetail = Agenda::find($timeline->post_id);
-                    $link = URL::to('/agenda/'.$timeline->post_id);
+                    $link = URL::to('/agenda?d='.$timelineDetail->date);
                 ?>
                 @if ($timelineDetail->date != $timelineDate->day)
                     <div class="col-sm-6 col-sm-offset-3 text-right assigned-date mg-bottom-15px-min paddingless">

@@ -49,17 +49,25 @@ class ToDoController extends BaseController {
 
 
     public function edit($id) {
-        //
+        $parents = StudentParent::select(DB::raw("CONCAT(first_name,' ',last_name) AS full_name, id"))->lists('full_name','id');
+        $user = Sentry::getUser();
+        try {
+            $model = ToDo::findOrFail($id);
+            $blankArray = array('' => '');
+            return View::make('todo-form', compact('model', 'user', 'parents'));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound();
+        }
     }
 
 
     public function update($id) {
-        //
+        return ToDo::updateToDo(array('input' => Input::all(), 'rules' => $this->rulesList(), 'messages' => $this->messagesList()));
     }
 
 
     public function destroy($id) {
-        //
+        return ToDo::deleteToDo(array('id' => $id));
     }
 
 /*

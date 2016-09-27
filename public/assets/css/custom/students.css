@@ -31,6 +31,7 @@
     position: absolute;
     top: -15px;
     right: -10px;
+    z-index: 1050;
 }
 
 .btn-menu .btn {

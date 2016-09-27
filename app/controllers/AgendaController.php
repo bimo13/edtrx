@@ -23,7 +23,22 @@ class AgendaController extends BaseController {
 
     public function index() {
         $user = Sentry::getUser();
-        return View::make('agenda', compact('user'));
+        if (isset($_GET['d']) && $_GET['d'] != "" && $_GET['d'] != NULL) {
+            $date = $_GET['d'];
+            list($y, $m, $d) = explode("-", $date);
+            if(checkdate($m, $d, $y)) {
+                $dateView['dayName'] = strtoupper(date('l', strtotime($date)));
+                $dateView['dateFull'] = strtoupper(date('F d, Y', strtotime($date)));
+            } else {
+                $dateView['dayName'] = strtoupper(date('l'));
+                $dateView['dateFull'] = strtoupper(date('F d, Y'));
+            }
+        } else {
+            $date = date("Y-m-d");
+            $dateView['dayName'] = strtoupper(date('l'));
+            $dateView['dateFull'] = strtoupper(date('F d, Y'));
+        }
+        return View::make('agenda', compact('user', 'date', 'dateView'));
     }
 
     public function create() {

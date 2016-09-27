@@ -29,10 +29,10 @@
                 <div class="col-sm-9 col-sm-offset-3 agenda-box">
 
                     <div class="col-sm-12 agenda-day" id="agenda-day">
-                        {{ strtoupper(date('l')) }}
+                        {{ $dateView['dayName'] }}
                     </div>
                     <div class="col-sm-12 agenda-text" id="agenda-date">
-                        {{ strtoupper(date('F d, Y')) }}
+                        {{ $dateView['dateFull'] }}
                     </div>
 
                 </div>
@@ -52,6 +52,12 @@
     <script type="text/javascript">
         var base_url = "{{ url() }}";
         var teacher_id = "{{ Sentry::getUser()->id }}";
+        @if ($date != NULL)
+            var dateByParam = true;
+            var dateValue = "{{ $date }}";
+        @else
+            var dateByParam = false;
+        @endif
     </script>
     {{ HTML::script('assets/js/custom/agenda-datepicker.js') }}
     {{ HTML::script('assets/js/custom/agenda.js') }}

@@ -20,6 +20,9 @@
     @endif
 
             {{ Form::hidden('teacher_id', Sentry::getUser()->id) }}
+            @if(isset($model))
+                {{ Form::hidden('id', $model->id, ['id' => 'id']) }}
+            @endif
 
             <div class="col-sm-6">
                 {{ Form::label('name', 'Task:') }}
@@ -54,8 +57,45 @@
                 </div>
             </div>
 
+            @if(isset($model) && $model->file_type != "" && $model->file_type != NULL)
+
+                <div class="col-sm-2">
+                    <div class="form-group todo-form">
+                        @if ($model->file_type == "xlsx")
+                            <img src="{{ asset('assets/img/icon-xlsx.png') }}" class="wd-full" />
+                        @elseif ($model->file_type == "xls")
+                            <img src="{{ asset('assets/img/icon-xls.png') }}" class="wd-full" />
+                        @elseif ($model->file_type == "docx")
+                            <img src="{{ asset('assets/img/icon-docx.png') }}" class="wd-full" />
+                        @elseif ($model->file_type == "doc")
+                            <img src="{{ asset('assets/img/icon-doc.png') }}" class="wd-full" />
+                        @elseif ($model->file_type == "pptx")
+                            <img src="{{ asset('assets/img/icon-pptx.png') }}" class="wd-full" />
+                        @elseif ($model->file_type == "ppt")
+                            <img src="{{ asset('assets/img/icon-ppt.png') }}" class="wd-full" />
+                        @elseif ($model->file_type == "pdf")
+                            <img src="{{ asset('assets/img/icon-pdf.png') }}" class="wd-full" />
+                        @endif
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="help-block marginless paddingless mg-top-5px txt-size-12px">
+                        Current File :<br />
+                        {{ $model->file_name }}
+                    </div>
+                </div>
+
+                <div class="clear mg-bottom-15px"></div>
+
+            @endif
+
             <div class="col-sm-12">
-                {{ Form::label('file', 'Attach File:') }}
+                @if(isset($model))
+                    {{ Form::label('file', 'Replace File:') }}
+                @else
+                    {{ Form::label('file', 'Attach File:') }}
+                @endif
                 <div class="form-group todo-form">
                     {{ Form::file('file', array('class' => 'filestyle', 'data-buttonText' => '&nbsp;&nbsp;Browse', 'data-buttonName' => 'btn-edutrax-cyan')) }}
                     {{ $errors->first('file', '<div class="text-danger">:message</div>') }}
@@ -73,8 +113,12 @@
 
             <div class="col-lg-12">
                 <div class="form-group text-right">
-                    {{ Form::submit('Create Task', array('class' => 'btn roundless btn-edutrax-cyan')) }}
-                    <a href="javascript:void(0);" class="btn roundless btn-edutrax-grey">Cancel</a>
+                    @if(isset($model))
+                        {{ Form::submit('Save Changes', array('class' => 'btn roundless btn-edutrax-cyan')) }}
+                    @else
+                        {{ Form::submit('Create Task', array('class' => 'btn roundless btn-edutrax-cyan')) }}
+                    @endif
+                    <a href="{{ URL::to('/todo') }}" class="btn roundless btn-edutrax-grey">Cancel</a>
                 </div>
             </div>
 

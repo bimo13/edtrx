@@ -98,13 +98,112 @@ class ToDo extends Model {
             $response['message'] = "Data saved successfully, yet it failed to be saved into timeline.";
         }
 
-        if ($mobile == 'on') {
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            die();
+        return Redirect::route('todo.index');
+
+    }
+
+    public function scopeUpdateToDo($query,$params) {
+
+        Input::merge(array_map('trim', Input::except('file','share_to')));
+
+        if (Input::hasFile('file')) {
+            $input = Input::all();
+            $has_file = 1;
+            $file = Input::file('file');
         } else {
-            return Redirect::route('todo.index');
+            $input = Input::except('file');
+            $has_file = 0;
         }
+
+        $response = array();
+        $rules = $params['rules'];
+        $messages = $params['messages'];
+        $mobile = Input::get('mobile');
+
+        Validator::extend('arrayofint', function($attribute, $value, $parameters) {
+            foreach($value as $v):
+                if (!preg_match('/^\d+$/',$v)) return false;
+            endforeach;
+            return true;
+        });
+
+        $validating = Validator::make($input, $rules, $messages);
+        if ($validating->fails()) {
+            if ($mobile == 'on') {
+                header('Content-Type: application/json');
+                $response['status'] = 0;
+                $response['message'] = $validating->messages();
+                echo json_encode($response);
+                die();
+            } else {
+                return Redirect::route('todo.create')->withInput()->withErrors($validating);
+            }
+        }
+
+        $update = $this->findOrFail(Input::get('id'));
+
+        // Check if there's an update on attachment
+        if (Input::hasFile('file')) {
+            // Preparing the file
+            $origName = $file->getClientOriginalName();
+            $fileType = $file->getClientOriginalExtension();
+            $fileName = Slugify::GetSlug(Input::get('name'));
+            $fileName = uniqid().'-'.$fileName.'.'.$fileType;
+            // Preparing the directory
+            $rawPath  = 'assets/uploads/todo/';
+            $uplPath  = public_path($rawPath);
+            if(!\File::exists($uplPath))
+                \File::makeDirectory($uplPath, $mode=0755, $recursive=false);
+            // Uploading the file
+            if (Input::file('file')->move($uplPath, $fileName)) {
+                $filePath = $rawPath.$fileName;
+                $update->file_path = $filePath;
+                $update->file_name = $origName;
+                $update->file_type = $fileType;
+            }
+        }
+
+        $update->teacher_id = Input::get('teacher_id');
+        $update->date = Input::get('date');
+        $update->name = Input::get('name');
+        $update->description = Input::get('description');
+        $update->has_file = $has_file;
+
+        if (is_array(Input::get('share_to')) && Input::get('share_to') != "") {
+            $publicity = implode(',',Input::get('share_to'));
+            $update->publicity = implode(',',Input::get('share_to'));
+        } else {
+            $publicity = "public";
+            $update->publicity = "public";
+        }
+
+        if($update->update()) {
+            $response['status'] = 1;
+            $response['message'] = "Data saved successfully.";
+        } else {
+            $response['status'] = 0;
+            $response['message'] = "An error occured, cannot save to database.";
+        }
+
+        return Redirect::route('todo.index');
+
+    }
+
+    public function scopeDeleteToDo($query,$params) {
+
+        $response = array();
+        $response['status'] = 0;
+        $response['message'] = "An error occured, please try again.";
+
+        $delTimeline = Timeline::where('category', '=', 'todo')
+                    ->where('post_id', '=', $params['id'])
+                    ->delete();
+        if($delTimeline && $this->destroy($params['id'])) {
+            $response['status'] = 1;
+            $response['message'] = "Data has been deleted successfully.";
+        }
+
+        return Redirect::route('todo.index');
 
     }
 

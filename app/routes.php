@@ -59,6 +59,7 @@ Route::group(['before' => 'hasAccess:admin,admin.grade'], function() {
 
 Route::group(['before' => 'hasAccess:admin,admin.student'], function() {
     Route::get('/students/getMyStudents', 'StudentsController@getMyStudents');
+    Route::post('/students/search', 'StudentsController@search');
     Route::resource('students', 'StudentsController');
 });
 

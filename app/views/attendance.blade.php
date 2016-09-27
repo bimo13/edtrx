@@ -12,6 +12,8 @@
 
 @section('main-content')
 
+    @include('attendance-search')
+
     <div class="col-sm-12 mg-bottom-10px">
         <button class="btn btn-edutrax-cyan roundless" id="search-btn" data-toggle="modal" data-target="#modal-search"><i class="fa fa-search"></i> Search</button>
         <button class="btn btn-edutrax-cyan roundless" id="refresh-btn">Refresh Table / Clear Search</button>

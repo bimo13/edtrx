@@ -58,6 +58,9 @@ $(document).ready(function() {
     var curMonth = date.getMonth()+1;
     var curYear = date.getFullYear();
     var sysDate = curYear+"-"+curMonth+"-"+curDate;
+    if (dateByParam) {
+        var sysDate = dateValue;
+    }
     getAgendaData(teacher_id,sysDate);
 });
 
@@ -113,3 +116,11 @@ $('#datepicker').datepicker().on('changeDate', function (es) {
     getAgendaData(teacher_id,sysDate);
 
 });
+
+if (dateByParam) {
+    var tanggal = new Date(dateValue);
+    var date = tanggal.getDate();
+    var months = tanggal.getMonth() + 1;
+    var years = tanggal.getFullYear();
+    $('#datepicker').datepicker('setValue', months+"/"+date+"/"+years);
+}
