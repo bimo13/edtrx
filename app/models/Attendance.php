@@ -57,14 +57,16 @@ class Attendance extends Model {
             } elseif (Input::get('att_'.$student_id) == NULL && (Input::get('att_late_'.$student_id) != NULL && Input::get('att_late_'.$student_id) != "")) {
                 $time = Input::get('att_late_'.$student_id);
                 $attn = 1;
+            } elseif (Input::get('att_'.$student_id) != NULL && (Input::get('att_late_'.$student_id) != NULL && Input::get('att_late_'.$student_id) != "")) {
+                $time = Input::get('att_late_'.$student_id);
+                $attn = 1;
             } else {
                 $time = "00:00";
                 $attn = 0;
             }
 
-
             $attendance = new Attendance;
-            $attendance->date = date("Y-m-d");
+            $attendance->date = Input::get('date');
             $attendance->time_arrive = $time;
             $attendance->student_id = $student_id;
             $attendance->attendance = $attn;
@@ -74,6 +76,18 @@ class Attendance extends Model {
 
         return Redirect::route('attendance.index');
 
+    }
+
+    public function scopeGetDetail($query, $id) {
+        $query->select(
+            'id',
+            'date',
+            'time_arrive',
+            'student_id',
+            'attendance',
+            'description'
+        )->where('student_id', '=', $id);
+        return $query;
     }
 
 }
