@@ -1,6 +1,6 @@
 @extends('dashboard')
 
-@section('web-content')
+@section('main-content')
 <div class="header-account">
     <div class="row">
         <div class="col-lg-12">

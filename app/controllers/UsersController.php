@@ -21,12 +21,14 @@ class UsersController extends BaseController {
     }
 
     public function index() {
-        return View::make('users');
+        $user = Sentry::getUser();
+        return View::make('users', compact('user'));
     }
 
     public function create() {
+        $user = Sentry::getUser();
         $blankArray = array('' => '');
-        return View::make('users-form', compact('blankArray'));
+        return View::make('users-form', compact('user', 'blankArray'));
     }
 
     public function store() {
@@ -38,21 +40,21 @@ class UsersController extends BaseController {
     }
 
     public function edit($id) {
+        $user = Sentry::getUser();
         try {
-            $user = User::findOrFail($id);
             $model = User::join('teacher_details', 'users.id', '=', 'teacher_details.user_id')
                 ->select('users.*', 'teacher_details.*')
                 ->where('users.id', '=', $id)
                 ->first();
             $blankArray = array('1' => 'SAMPLE');
-            return View::make('users-form', compact('model','blankArray'));
+            return View::make('users-form', compact('user', 'model','blankArray'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
     }
 
     public function update($id) {
-        //
+        return User::updateUser(array('input' => Input::all(), 'rules' => $this->rulesList()));
     }
 
     public function destroy($id) {
@@ -86,7 +88,7 @@ class UsersController extends BaseController {
                     <a href="javascript:void(0);">Delete</a>';
             return $ret;
         });
-        return $datatable->out();
+        return $datatable->make();
     }
 
 }

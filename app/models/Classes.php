@@ -44,4 +44,40 @@ class Classes extends Model {
 
     }
 
+    public function scopeUpdateClass($query,$params) {
+
+        $input = $params['input'];
+        $rules = $params['rules'];
+
+        $validating = Validator::make($input, $rules);
+        if ($validating->fails()) {
+            return Redirect::route('classes.create')->withInput()->withErrors($validating);
+        }
+
+        $update = $this->findOrFail(Input::get('id'));
+
+        $update->class_name = Input::get('class_name');
+        $update->grade_level = Input::get('grade_level');
+        $update->teacher_id = Input::get('teacher_id');
+        $update->update();
+
+        return Redirect::back();
+
+    }
+
+    public function scopeDeleteClass($query,$params) {
+
+        $response = array();
+        $response['status'] = 0;
+        $response['message'] = "An error occured, please try again.";
+
+        if($this->destroy($params['id'])) {
+            $response['status'] = 1;
+            $response['message'] = "Data has been deleted successfully.";
+        }
+
+        return Redirect::route('classes.index');
+
+    }
+
 }

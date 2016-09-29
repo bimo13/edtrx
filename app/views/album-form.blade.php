@@ -1,6 +1,6 @@
 @extends('dashboard')
 
-@section('web-content')
+@section('main-content')
 <div class="container-fluid">
     <div class="col-lg-12">
         <div class="main-form-wrapper" >

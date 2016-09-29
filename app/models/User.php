@@ -118,4 +118,91 @@ class User extends Model {
 
     }
 
+    public function scopeUpdateUser($query,$params) {
+
+        $input = $params['input'];
+        $rules = $params['rules'];
+        $rules['email'] = "required|max:255|email";
+        $rules['password'] = "max:255";
+        $rules['teacher_no'] = "required|max:255";
+
+        if (Input::hasFile('photo')) {
+            $imgRule = array('photo' => 'image|mimes:png,gif,jpg,jpeg,bmp|max:20000');
+            $rules = $rules + $imgRule;
+
+            $image = Input::file('photo');
+            $rawPath = 'assets/uploads/teachers/';
+            $uplPath = public_path($rawPath);
+        }
+
+        $validating = Validator::make($input, $rules);
+        if ($validating->fails()) {
+            return Redirect::route('users.edit', array(Input::get('id')))->withInput()->withErrors($validating);
+        }
+
+        if (Input::hasFile('photo')) {
+            // Prevent "directory not exists" error
+            if(!\File::exists($uplPath))
+                \File::makeDirectory($path, $mode=0755, $recursive=false);
+
+            // Handle image upload with image-intervention.io
+            $uniqid = uniqid();
+            $imagePath = $uplPath.$uniqid.'-'.$image->getClientOriginalName();
+            $thumbPath = $uplPath.'thumb-'.$uniqid.'-'.$image->getClientOriginalName();
+            Image::make($image)->save($imagePath);
+            Image::make($image)->resize(200, 200)->save($thumbPath);
+            $imagePath = $rawPath.$uniqid.'-'.$image->getClientOriginalName();
+        }
+
+        try {
+            $user = Sentry::findUserById(Input::get('id'));
+
+            $usnm = Input::get('email');
+            $pswd = Input::get('password');
+            $full_name = Input::get('first_name') . " " . Input::get('last_name');
+
+            $user->email = Input::get('email');
+            $user->first_name = strtoupper(Input::get('first_name'));
+            $user->last_name =  strtoupper(Input::get('last_name'));
+
+            if (Input::get('password') != "" && Input::get('password') != NULL) {
+                $user->password = Input::get('password');
+            }
+
+            $user->save();
+
+            $userDetail = UserDetail::findOrFail(Input::get('detail_id'));
+            $userDetail->user_id = $user->id;
+            $userDetail->teacher_no = Input::get('teacher_no');
+            $userDetail->address = strtoupper(Input::get('address'));
+            $userDetail->phone_1 = Input::get('phone_1');
+            $userDetail->phone_2 = Input::get('phone_2');
+            $userDetail->birth_place = strtoupper(Input::get('birth_place'));
+            $userDetail->birth_date = Input::get('birth_date');
+            $userDetail->gender = Input::get('gender');
+            if (Input::hasFile('photo')) {
+                $userDetail->photo = $imagePath;
+            }
+
+            if($userDetail->update()) {
+                Session::flash('message', 'A new user has been created successfully.'); 
+                Session::flash('alert-class', 'success');
+                Session::flash('usnm', $usnm);
+                Session::flash('pswd', $pswd);
+                Session::flash('fullname', $full_name);
+            } else {
+                Session::flash('message', 'An error occured, cannot save to database. Please try again.'); 
+                Session::flash('alert-class', 'danger');
+            }
+
+            return Redirect::back();
+
+        } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
+            return Redirect::route('users.edit', array(Input::get('id')))->withInput()->withErrors("User with this login already exists, please try again.");
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            return Redirect::route('users.edit', array(Input::get('id')))->withInput()->withErrors("An error occured while saving data, please try again.");
+        }
+
+    }
+
 }

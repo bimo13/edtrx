@@ -1,0 +1,19 @@
+table#datatables {
+    font-size: 12px;
+    border: none;
+    border-collapse: collapse !important;
+}
+
+table#datatables th {
+    color: #FFFFFF;
+    background-color: #52C7D1;
+
+    font-size: 14px;
+    letter-spacing: 1px;
+
+    border-color: #52C7D1;
+}
+
+table#datatables.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #F6FCFD;
+}
