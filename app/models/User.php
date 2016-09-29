@@ -205,4 +205,24 @@ class User extends Model {
 
     }
 
+    public function scopeDeleteUser($query,$params) {
+
+        $response = array();
+        $response['status'] = 0;
+        $response['message'] = "An error occured, please try again.";
+
+        try {
+            // Find the user using the user id
+            $user = Sentry::findUserById($params['id']);
+            if ($user->delete()) {
+                UserDetail::where('user_id', '=', $params['id'])->delete();
+            }
+        } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            return Redirect::route('users.index', array(Input::get('id')))->withInput()->withErrors("An error occured while deleting user data, please try again.");
+        }
+
+        return Redirect::route('users.index');
+
+    }
+
 }

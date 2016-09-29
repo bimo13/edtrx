@@ -14,9 +14,25 @@ $(document).ready(function() {
         },
         "columnDefs": [
             { "sortable": false, "targets": [3] },
-            { "sClass": "text-right", "targets": [3] },
+            { "sClass": "text-center", "targets": [3] },
             { "name": "teacher_no", "targets": [0] }
         ],
         "order": [[ 0, 'asc' ]]
+    });
+});
+
+$('#modal-delete').on('show.bs.modal', function(e){
+    var btn = $(e.relatedTarget);
+    var id = btn.data('id');
+    var title = btn.data('title');
+    var preview = btn.data('preview');
+    var modal = $(this)
+
+    $("#form-delete").attr("action", base_url+"/users/"+id);
+
+    modal.find('.modal-body').empty();
+    modal.find('.modal-body').html('Are you sure want to delete this data ?<br />'+preview)
+    modal.find('#btn-delete').on('click', function(e){
+        window.location.replace("/admin/"+title+"/destroy/"+id);
     });
 });

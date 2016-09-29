@@ -58,7 +58,7 @@ class UsersController extends BaseController {
     }
 
     public function destroy($id) {
-        //
+        return User::deleteUser(array('id' => $id));
     }
 
     // END OF RESTful ROUTING
@@ -81,11 +81,11 @@ class UsersController extends BaseController {
             return $honorifics." ".$name;
         });
         $datatable->edit_column('action', function($obj) {
-            $ret = '<a href="javascript:void(0);">Show</a>
+            $ret = '<a href="' . URL::route('users.edit', array($obj->id)) . '"><i class="glyphicon glyphicon-pencil"></i></a>
                     &middot;
-                    <a href="'.URL::to('/').'/users/'.$obj->id.'/edit">Edit</a>
-                    &middot;
-                    <a href="javascript:void(0);">Delete</a>';
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#modal-delete" data-id="' . $obj->id . '" data-title="users" data-preview="' . $obj->full_name . '">
+                        <i class="text-danger glyphicon glyphicon-trash"></i>
+                    </a>';
             return $ret;
         });
         return $datatable->make();
