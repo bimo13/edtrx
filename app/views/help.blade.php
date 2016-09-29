@@ -1,6 +1,6 @@
 @extends('dashboard')
 
-@section('web-content')
+@section('main-content')
 <div class="page-title">
     <h3>FREQUENTLY ASKED QUESTION</h3>
     <div class="line-bottom"></div>

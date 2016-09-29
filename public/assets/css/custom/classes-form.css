@@ -1,0 +1,46 @@
+#classes-form label {
+    color: #848484;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+#classes-form .form-group.classes-form {
+    padding: 10px;
+    background-color: #FFFFFF;
+}
+
+#classes-form .form-control {
+    background-color: #FFFFFF;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#classes-form .input-group-addon {
+    color: #FFFFFF;
+    background-color: #52C7D1;
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+}
+
+#classes-form textarea {
+    resize: none;
+}
+
+#classes-form .btn.roundless {
+    min-width: 150px;
+}
+
+.text-danger.flash-error {
+    margin-top: -15px;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+.select2-container--default .select2-selection--single {
+    -webkit-border-radius: 0 !important;
+       -moz-border-radius: 0 !important;
+            border-radius: 0 !important;
+    border-color: #CCCCCC;
+}

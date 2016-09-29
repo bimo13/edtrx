@@ -7,7 +7,7 @@
 @section('styles')
     {{ HTML::style('assets/css/datatables/jquery.dataTables.css') }}
     {{ HTML::style('assets/css/sa-datetimepicker/bootstrap-datetimepicker.min.css') }}
-    {{ HTML::style('assets/css/custom/attendance.css') }}
+    {{ HTML::style('assets/css/custom/classes.css') }}
 @stop
 
 @section('main-content')

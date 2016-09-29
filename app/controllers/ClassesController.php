@@ -20,15 +20,17 @@ class ClassesController extends BaseController {
     }
 
     public function index() {
-        return View::make('class');
+        $user = Sentry::getUser();
+        return View::make('class', compact('user'));
     }
 
     public function create() {
+        $user = Sentry::getUser();
         $blankArray = array('' => '');
         $teachers = User::select(DB::raw('CONCAT(first_name, " ", last_name) AS full_name, id'))->where('id', '!=', 1)->orderBy('full_name')->lists('full_name', 'id');
         $teachers = $blankArray + $teachers;
         $teachers = array_map(function($word) { return ucwords(strtolower($word)); }, $teachers);
-        return View::make('class-form', compact('blankArray', 'teachers'));
+        return View::make('class-form', compact('user', 'blankArray', 'teachers'));
     }
 
     public function store() {
@@ -40,15 +42,25 @@ class ClassesController extends BaseController {
     }
 
     public function edit($id) {
-        //
+        $user = Sentry::getUser();
+        try {
+            $model = Classes::findOrFail($id);
+            $blankArray = array('' => '');
+            $teachers = User::select(DB::raw('CONCAT(first_name, " ", last_name) AS full_name, id'))->where('id', '!=', 1)->orderBy('full_name')->lists('full_name', 'id');
+            $teachers = $blankArray + $teachers;
+            $teachers = array_map(function($word) { return ucwords(strtolower($word)); }, $teachers);
+            return View::make('class-form', compact('model', 'user', 'blankArray', 'teachers'));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound();
+        }
     }
 
     public function update($id) {
-        //
+        return Classes::updateClass(array('input' => Input::all(), 'rules' => $this->rulesList()));
     }
 
     public function destroy($id) {
-        //
+        return Classes::deleteClass(array('id' => $id));
     }
 
     // END OF RESTful ROUTING
@@ -71,11 +83,11 @@ class ClassesController extends BaseController {
             return $honorifics." ".$first_name." ".$last_name;
         });
         $datatable->edit_column('action', function($obj) {
-            $ret = '<a href="javascript:void(0);">Show</a>
+            $ret = '<a href="' . URL::route('classes.edit', array($obj->id)) . '"><i class="glyphicon glyphicon-pencil"></i></a>
                     &middot;
-                    <a href="javascript:void(0);">Edit</a>
-                    &middot;
-                    <a href="javascript:void(0);">Delete</a>';
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#modal-delete" data-id="' . $obj->id . '" data-title="classes" data-preview="' . $obj->class_name . '">
+                        <i class="text-danger glyphicon glyphicon-trash"></i>
+                    </a>';
             return $ret;
         });
         return $datatable->out();

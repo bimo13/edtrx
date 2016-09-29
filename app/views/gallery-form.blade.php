@@ -50,7 +50,7 @@
             <div class="col-sm-5">
                 {{ Form::label('date', 'Date:') }}
                 <div class="form-group gallery-form">
-                    <div class='input-group date' id='agendaDate'>
+                    <div class='input-group date' id='date'>
                         {{ Form::text('date', null, array('class' => 'form-control', 'readonly')) }}
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -101,15 +101,25 @@
 
 @section('scripts')
     <!-- JQuery Bootstrap.Filestyle -->
+    {{ HTML::script('assets/js/sa-datetimepicker/moment.js') }}
+    {{ HTML::script('assets/js/sa-datetimepicker/transition.js') }}
+    {{ HTML::script('assets/js/sa-datetimepicker/collapse.js') }}
+    {{ HTML::script('assets/js/sa-datetimepicker/bootstrap-datetimepicker.min.js') }}
     {{ HTML::script('assets/js/forms.filestyle.js') }}
     {{ HTML::script('assets/js/select2.js') }}
     {{ HTML::script('assets/js/multifile/jquery.MultiFile.js') }}
     <script type="text/javascript">
-        $("#share_to").select2();
-        $(".image-input").MultiFile({
-            accept: 'jpg|png|gif',
-            preview: true,
-            previewCss: 'border: solid 1px #C1C1C1; width: 100%; padding-bottom: 100%; background-size: cover;'
+        $(function () {
+            $('#date').datetimepicker({
+                format: 'YYYY/MM/DD',
+                ignoreReadonly: true
+            });
+            $("#share_to").select2();
+            $(".image-input").MultiFile({
+                accept: 'jpg|png|gif',
+                preview: true,
+                previewCss: 'border: solid 1px #C1C1C1; width: 100%; padding-bottom: 100%; background-size: cover;'
+            });
         });
     </script>
 @stop

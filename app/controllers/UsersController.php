@@ -21,12 +21,14 @@ class UsersController extends BaseController {
     }
 
     public function index() {
-        return View::make('users');
+        $user = Sentry::getUser();
+        return View::make('users', compact('user'));
     }
 
     public function create() {
+        $user = Sentry::getUser();
         $blankArray = array('' => '');
-        return View::make('users-form', compact('blankArray'));
+        return View::make('users-form', compact('user', 'blankArray'));
     }
 
     public function store() {
@@ -38,25 +40,25 @@ class UsersController extends BaseController {
     }
 
     public function edit($id) {
+        $user = Sentry::getUser();
         try {
-            $user = User::findOrFail($id);
             $model = User::join('teacher_details', 'users.id', '=', 'teacher_details.user_id')
                 ->select('users.*', 'teacher_details.*')
                 ->where('users.id', '=', $id)
                 ->first();
             $blankArray = array('1' => 'SAMPLE');
-            return View::make('users-form', compact('model','blankArray'));
+            return View::make('users-form', compact('user', 'model','blankArray'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
     }
 
     public function update($id) {
-        //
+        return User::updateUser(array('input' => Input::all(), 'rules' => $this->rulesList()));
     }
 
     public function destroy($id) {
-        //
+        return User::deleteUser(array('id' => $id));
     }
 
     // END OF RESTful ROUTING
@@ -79,14 +81,14 @@ class UsersController extends BaseController {
             return $honorifics." ".$name;
         });
         $datatable->edit_column('action', function($obj) {
-            $ret = '<a href="javascript:void(0);">Show</a>
+            $ret = '<a href="' . URL::route('users.edit', array($obj->id)) . '"><i class="glyphicon glyphicon-pencil"></i></a>
                     &middot;
-                    <a href="'.URL::to('/').'/users/'.$obj->id.'/edit">Edit</a>
-                    &middot;
-                    <a href="javascript:void(0);">Delete</a>';
+                    <a href="javascript:void(0);" data-toggle="modal" data-target="#modal-delete" data-id="' . $obj->id . '" data-title="users" data-preview="' . $obj->full_name . '">
+                        <i class="text-danger glyphicon glyphicon-trash"></i>
+                    </a>';
             return $ret;
         });
-        return $datatable->out();
+        return $datatable->make();
     }
 
 }

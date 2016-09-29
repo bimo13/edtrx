@@ -107,11 +107,13 @@
                         <a href="{{ URL::to('/users') }}"><i class="fa fa-user"></i>USER MANAGEMENT</a>
                     </li>
                     @endif
+                    @if(!$user->hasAnyAccess(array('admin')))
                     <li>
                         <a href="{{ URL::to('/chat') }}"><i class="fa fa-comments-o"></i>CHAT</a>
                     </li>
+                    @endif
                     <li>
-                        <a href="{{ URL::to('/account') }}"><img src="{{ asset('assets/img/user.png') }}" alt="..." class="img-circle" style="width: 40px;height: auto">ACCOUNT</a>
+                        <a href="{{ URL::to('/account') }}"><img src="{{ asset('assets/img/user.png') }}" alt="..." class="img-circle" style="width: 40px;height: auto">&nbsp;&nbsp;ACCOUNT</a>
                     </li>
                     </ul>
                     <div class="clear"></div>
