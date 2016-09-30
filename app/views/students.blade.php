@@ -55,7 +55,7 @@
                         </a>
                     </div>
                     <div class="col-sm-12 paddingless student-name">
-                        {{ ucwords(strtolower($student->first_name)) }} {{ ucwords(strtolower($student->last_name)) }}
+                        <a href="{{ URL::route('students.show', $student->id) }}" class="color-333333">{{ ucwords(strtolower($student->first_name)) }} {{ ucwords(strtolower($student->last_name)) }}</a>
                     </div>
                     <div class="col-sm-12 paddingless student-class">
                         {{ $student->student_no }} / Kelas II A
