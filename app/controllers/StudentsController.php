@@ -49,7 +49,13 @@ class StudentsController extends BaseController {
     }
 
     public function show($id) {
-        //
+        $user = Sentry::getUser();
+        try {
+            $student = Student::findOrFail($id);
+            return View::make('students-detail', compact('user', 'student'));
+        } catch (ModelNotFoundException $e) {
+            return Redirect::to('/students/')->withErrors(array('msg' => 'Failed to parse pinboard data, please try again.'));
+        }
     }
 
 
